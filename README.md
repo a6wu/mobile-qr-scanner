@@ -8,7 +8,8 @@ Features for phase one:
 5. Geolocation tagging at time of barcode scan
 
 Features for phase two:
+
 1. Allow users to sign-in via SSO
 2. Associate the barcode data with the user id, app id
 3. Allow users to answer survey questions
-
+4. Encryption on local device and in datastore (public/private key setup)
