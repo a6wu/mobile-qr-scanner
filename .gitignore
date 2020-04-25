@@ -8,6 +8,8 @@
 .buildlog/
 .history
 .svn/
+pubspec.lock
+ios/Podfile.lock
 
 # IntelliJ related
 *.iml
