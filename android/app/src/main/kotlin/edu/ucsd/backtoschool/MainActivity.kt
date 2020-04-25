@@ -1,4 +1,4 @@
-package com.example.testscan
+package edu.ucsd.backtoschool
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
