@@ -1,6 +1,9 @@
+# TestScan Flutter App
+
 The goal of this is to have a mobile app that a user can scan a barcode.
 
 Features for phase one:
+
 1. Scan barcode
 2. Barcode information along with app identifier gets sent to backend via API
 3. Backend saves the data and associate with the app identifier, Firebase token
@@ -15,4 +18,11 @@ Features for phase two:
 4. Encryption on local device and in datastore (public/private key setup)
 
 Possible Libraries
+
 1. https://github.com/FirebaseExtended/flutterfire/tree/master/packages/firebase_ml_vision
+
+## Installation Instructions
+
+- [Install Flutter](https://flutter.dev/docs/get-started/install)
+  
+  - If you are on macOS Catalina, you will have to use [this workaround](https://github.com/flutter/flutter/issues/36714#issuecomment-559937187) when running commands such as `flutter doctor`
