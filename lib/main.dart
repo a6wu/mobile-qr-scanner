@@ -2,12 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 
-void main() => runApp(MaterialApp(home: QRViewExample()));
+void main() => runApp(TabBarApp());
 
 const flash_on = "FLASH ON";
 const flash_off = "FLASH OFF";
 const front_camera = "FRONT CAMERA";
 const back_camera = "BACK CAMERA";
+
+class TabBarApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.home)),
+                Tab(icon: Icon(Icons.message)),
+              ],
+            ),
+            title: Text('Tabs Demo'),
+          ),
+          body: TabBarView(
+            children: [
+              QRViewExample(),
+              Icon(Icons.directions_transit),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class QRViewExample extends StatefulWidget {
   const QRViewExample({
