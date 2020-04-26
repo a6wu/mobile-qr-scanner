@@ -4,7 +4,9 @@ import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 
 void main() => runApp(TabBarApp());
 
-const flash_on = "FLASH ON";
+const submit_btn_active = " ... Sending";
+const submit_btn_inactive = "Submit";
+
 const flash_off = "FLASH OFF";
 const front_camera = "FRONT CAMERA";
 const back_camera = "BACK CAMERA";
@@ -48,7 +50,7 @@ class QRViewExample extends StatefulWidget {
 
 class _QRViewExampleState extends State<QRViewExample> {
   var qrText = "";
-  var flashState = flash_on;
+  var submitState = submit_btn_inactive;
   var cameraState = front_camera;
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -78,7 +80,7 @@ class _QRViewExampleState extends State<QRViewExample> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text("This is the result of scan: $qrText"),
+                  Text("Barcode: $qrText"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,66 +91,21 @@ class _QRViewExampleState extends State<QRViewExample> {
                           onPressed: () {
                             if (controller != null) {
                               controller.toggleFlash();
-                              if (_isFlashOn(flashState)) {
+                              if (_isSubmitActive(submitState)) {
                                 setState(() {
-                                  flashState = flash_off;
+                                  submitState = submit_btn_inactive;
                                 });
                               } else {
                                 setState(() {
-                                  flashState = flash_on;
+                                  submitState = submit_btn_active;
                                 });
                               }
                             }
                           },
                           child:
-                              Text(flashState, style: TextStyle(fontSize: 20)),
+                              Text(submitState, style: TextStyle(fontSize: 20)),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
-                          onPressed: () {
-                            if (controller != null) {
-                              controller.flipCamera();
-                              if (_isBackCamera(cameraState)) {
-                                setState(() {
-                                  cameraState = front_camera;
-                                });
-                              } else {
-                                setState(() {
-                                  cameraState = back_camera;
-                                });
-                              }
-                            }
-                          },
-                          child:
-                              Text(cameraState, style: TextStyle(fontSize: 20)),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
-                          onPressed: () {
-                            controller?.pauseCamera();
-                          },
-                          child: Text('pause', style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
-                          onPressed: () {
-                            controller?.resumeCamera();
-                          },
-                          child: Text('resume', style: TextStyle(fontSize: 20)),
-                        ),
-                      )
                     ],
                   ),
                 ],
@@ -161,8 +118,8 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  _isFlashOn(String current) {
-    return flash_on == current;
+  _isSubmitActive(String current) {
+    return submit_btn_active == current;
   }
 
   _isBackCamera(String current) {
