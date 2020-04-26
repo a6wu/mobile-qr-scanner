@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(TabBarApp());
 
@@ -90,14 +91,19 @@ class _QRViewExampleState extends State<QRViewExample> {
                         child: RaisedButton(
                           onPressed: () {
                             if (controller != null) {
-                              controller.toggleFlash();
                               if (_isSubmitActive(submitState)) {
-                                setState(() {
-                                  submitState = submit_btn_inactive;
-                                });
+                                //setState(() {
+                                //  submitState = submit_btn_inactive;
+                                //});
+
+                                // state should reset only after
+                                // POST to API returns as success or failure
+
                               } else {
                                 setState(() {
+                                  // ... Sending
                                   submitState = submit_btn_active;
+                                  submitBarcode();
                                 });
                               }
                             }
@@ -116,6 +122,23 @@ class _QRViewExampleState extends State<QRViewExample> {
         ],
       ),
     );
+  }
+
+  submitBarcode() async {
+    var url =
+        'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcode';
+    var response = await http.post(url);
+    print('Response status: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      setState(() {
+        submitState = "Received";
+      });
+    } else {
+      setState(() {
+        submitState = "Try again";
+      });
+    }
   }
 
   _isSubmitActive(String current) {
