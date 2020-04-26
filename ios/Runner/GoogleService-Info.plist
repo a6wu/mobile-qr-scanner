@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>40638469960-3h6qs8dj01fjgaagbj9pp3tlf8gola4i.apps.googleusercontent.com</string>
+	<string>40638469960-405trdf5u06eaau38l87ge9dg7813oh3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.40638469960-3h6qs8dj01fjgaagbj9pp3tlf8gola4i</string>
+	<string>com.googleusercontent.apps.40638469960-405trdf5u06eaau38l87ge9dg7813oh3</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAVWRIQg5doVEFVfylZ4-oekZF1BM__JP4</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:40638469960:ios:eab9a17689b4131579057d</string>
+	<string>1:40638469960:ios:85a979a2e10893ad79057d</string>
 	<key>DATABASE_URL</key>
 	<string>https://fir-ml-31ede.firebaseio.com</string>
 </dict>
