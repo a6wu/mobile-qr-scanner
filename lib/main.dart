@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 import 'package:http/http.dart' as http;
+import 'package:backtoschool/app_theme.dart';
 
 void main() => runApp(TabBarApp());
 
@@ -16,6 +17,24 @@ class TabBarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: ColorPrimary,
+        accentColor: lightAccentColor,
+        brightness: Brightness.light,
+        buttonColor: lightButtonColor,
+        textTheme: lightThemeText,
+        iconTheme: lightIconTheme,
+        appBarTheme: lightAppBarTheme,
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: ColorPrimary,
+        accentColor: darkAccentColor,
+        brightness: Brightness.dark,
+        buttonColor: darkButtonColor,
+        textTheme: darkThemeText,
+        iconTheme: darkIconTheme,
+        appBarTheme: darkAppBarTheme,
+      ),
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -26,7 +45,7 @@ class TabBarApp extends StatelessWidget {
                 Tab(icon: Icon(Icons.message)),
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Center(child: Text('Back to UCSD')),
           ),
           body: TabBarView(
             children: [
@@ -81,21 +100,17 @@ class _QRViewExampleState extends State<QRViewExample> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text("Barcode: $qrText"),
+                  Text("$qrText"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
+                        child: FlatButton(
                           onPressed: () {
                             if (controller != null) {
                               if (_isSubmitActive(submitState)) {
-                                //setState(() {
-                                //  submitState = submit_btn_inactive;
-                                //});
-
                                 // state should reset only after
                                 // POST to API returns as success or failure
 
