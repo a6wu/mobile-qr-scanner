@@ -99,7 +99,7 @@ class _QRViewExampleState extends State<QRViewExample> {
               fit: BoxFit.contain,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
+                children: qrText.isNotEmpty ? <Widget>[
                   Text("$qrText"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +129,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                       ),
                     ],
                   ),
-                ],
+                ] : <Widget>[Text("Please scan a test kit.")],
               ),
             ),
             flex: 1,
