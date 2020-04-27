@@ -10,6 +10,7 @@
 .svn/
 pubspec.lock
 ios/Podfile.lock
+android/key.properties
 
 # IntelliJ related
 *.iml
