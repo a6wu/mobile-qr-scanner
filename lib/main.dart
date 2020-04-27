@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
@@ -99,37 +101,39 @@ class _QRViewExampleState extends State<QRViewExample> {
               fit: BoxFit.contain,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: qrText.isNotEmpty ? <Widget>[
-                  Text("$qrText"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          onPressed: () {
-                            if (controller != null) {
-                              if (_isSubmitActive(submitState)) {
-                                // state should reset only after
-                                // POST to API returns as success or failure
+                children: qrText.isNotEmpty
+                    ? <Widget>[
+                        Text("$qrText"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.all(8.0),
+                              child: FlatButton(
+                                onPressed: () {
+                                  if (controller != null) {
+                                    if (_isSubmitActive(submitState)) {
+                                      // state should reset only after
+                                      // POST to API returns as success or failure
 
-                              } else {
-                                setState(() {
-                                  // ... Sending
-                                  submitState = submit_btn_active;
-                                  submitBarcode(qrText);
-                                });
-                              }
-                            }
-                          },
-                          child:
-                              Text(submitState, style: TextStyle(fontSize: 20)),
+                                    } else {
+                                      setState(() {
+                                        // ... Sending
+                                        submitState = submit_btn_active;
+                                        submitBarcode(qrText);
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Text(submitState,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ] : <Widget>[Text("Please scan a test kit.")],
+                      ]
+                    : <Widget>[Text("Please scan a test kit.")],
               ),
             ),
             flex: 1,
@@ -142,11 +146,11 @@ class _QRViewExampleState extends State<QRViewExample> {
   submitBarcode(qrText) async {
     var url =
         'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcode';
-    var response = await http.post(url, body: {
-      'payload': qrText,
-      'token': 'testToken',
-    });
-    print('Response status: ${response.statusCode}');
+
+    var body = {'barcode': qrText, 'firebase-token': 'placeholder'};
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: json.encode(body));
 
     if (response.statusCode == 200) {
       setState(() {
