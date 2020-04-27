@@ -118,7 +118,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                                 setState(() {
                                   // ... Sending
                                   submitState = submit_btn_active;
-                                  submitBarcode();
+                                  submitBarcode(qrText);
                                 });
                               }
                             }
@@ -139,10 +139,13 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  submitBarcode() async {
+  submitBarcode(qrText) async {
     var url =
         'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcode';
-    var response = await http.post(url);
+    var response = await http.post(url, body: {
+      'payload': qrText,
+      'token': 'testToken',
+    });
     print('Response status: ${response.statusCode}');
 
     if (response.statusCode == 200) {
