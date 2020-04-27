@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
@@ -142,8 +144,10 @@ class _QRViewExampleState extends State<QRViewExample> {
   submitBarcode() async {
     var url =
         'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcode';
-    var response = await http.post(url);
-    print('Response status: ${response.statusCode}');
+    var body = {'barcode': qrText, 'firebase-token': 'placeholder'};
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: json.encode(body));
 
     if (response.statusCode == 200) {
       setState(() {
