@@ -77,6 +77,10 @@ class UserDataProvider extends ChangeNotifier {
     return storage.read(key: 'username');
   }
 
+  String getUserNameNotAsync() {
+    getUsernameFromDevice().then((value) => value);
+  }
+
   void deleteUsernameFromDevice() {
     storage.delete(key: 'username');
   }
