@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class NetworkHelper {
@@ -50,7 +51,7 @@ class NetworkHelper {
     dio.options.receiveTimeout = 10000;
     dio.options.headers = headers;
     try {
-      final _response = await dio.post(url, data: body);
+      final _response = await dio.post(url, data: jsonEncode(body));
       if (_response.statusCode == 200) {
         // If server returns an OK response, return the body
         return _response.data;

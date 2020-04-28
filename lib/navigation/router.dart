@@ -9,8 +9,10 @@ class Router {
     switch (settings.name) {
       case RoutePaths.Home:
         return MaterialPageRoute(builder: (_) => SSOLoginView());
+        break;
       case RoutePaths.QrScanner:
         return MaterialPageRoute(builder: (_) => QRViewExample());
+        break;
     }
   }
 }

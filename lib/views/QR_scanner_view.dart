@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
-import 'package:http/http.dart' as http;
 import '../constants.dart';
 
 class QRViewExample extends StatefulWidget {

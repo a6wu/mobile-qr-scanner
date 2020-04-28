@@ -1,5 +1,4 @@
 import 'package:backtoschool/navigation/router.dart';
-import 'package:backtoschool/views/QR_scanner_view.dart';
 import 'package:backtoschool/views/SSO_view.dart';
 import 'package:flutter/material.dart';
 import 'package:backtoschool/app_theme.dart';
@@ -18,7 +17,7 @@ void main() async {
   runApp(TabBarApp());
 }
 
-void initializeStorage() async {
+Future<void> initializeStorage() async {
   /// initialize hive storage
   Hive.initFlutter('.');
 
