@@ -37,25 +37,11 @@ class TabBarApp extends StatelessWidget {
         iconTheme: darkIconTheme,
         appBarTheme: darkAppBarTheme,
       ),
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.home)),
-                Tab(icon: Icon(Icons.message)),
-              ],
-            ),
-            title: Center(child: Text('Back to UCSD')),
-          ),
-          body: TabBarView(
-            children: [
-              QRViewExample(),
-              Icon(Icons.directions_transit),
-            ],
-          ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Center(child: Text('UCSD Scan')),
         ),
+        body:  QRViewExample(),
       ),
     );
   }
