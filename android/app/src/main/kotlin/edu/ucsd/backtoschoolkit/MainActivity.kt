@@ -1,4 +1,4 @@
-package edu.ucsd.backtoschool
+package edu.ucsd.backtoschoolkit
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
