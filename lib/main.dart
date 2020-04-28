@@ -29,8 +29,6 @@ void initializeStorage() async {
     await Hive.deleteFromDisk();
     await storage.deleteAll();
     setFirstRun();
-  } else {
-    //showOnboardingScreen = false;
   }
 }
 

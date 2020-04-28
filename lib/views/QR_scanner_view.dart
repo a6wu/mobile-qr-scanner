@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/services/barcode_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +24,13 @@ class _QRViewExampleState extends State<QRViewExample> {
   var cameraState = front_camera;
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  UserDataProvider _userDataProvider;
+  int timeScanned;
+
+  @override
+  void didChangeDependencies() {
+    _userDataProvider = Provider.of<UserDataProvider>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,17 +96,20 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
+  Map<String, dynamic> createData() => {
+        'userId': _userDataProvider.getUsernameFromDevice(),
+        'barcode': qrText,
+        'uscdaffiliation':
+            _userDataProvider.authenticationModel.ucsdaffiliation,
+        'scannedDate': timeScanned
+      };
+
   submitBarcode(qrText) async {
     var barcodeService = BarcodeService();
-    var url =
-        'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcode';
+    var results = await barcodeService
+        .uploadResults({"Content-Type": "application/json"}, createData());
 
-    var body = {'barcode': qrText, 'firebase-token': 'placeholder'};
-
-    var response = await http.post(url,
-        headers: {"Content-Type": "application/json"}, body: json.encode(body));
-
-    if (response.statusCode == 200) {
+    if (results) {
       setState(() {
         submitState = "Received";
       });
@@ -121,6 +133,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         qrText = scanData;
+        timeScanned = DateTime.now().millisecondsSinceEpoch;
       });
     });
   }
