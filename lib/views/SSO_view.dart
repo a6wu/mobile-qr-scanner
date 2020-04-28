@@ -25,10 +25,12 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _userDataProvider.isLoading
-          ? buildLoadingIndicator()
-          : _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
-    );
+        body: _userDataProvider.isLoading
+            ? buildLoadingIndicator()
+            : _userDataProvider.getUsernameFromDevice().then((value) {
+                if (value != null) return QRViewExample();
+                return buildLoginWidget();
+              }));
   }
 
   Widget buildLoginWidget() {

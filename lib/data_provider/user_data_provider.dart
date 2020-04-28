@@ -119,7 +119,7 @@ class UserDataProvider extends ChangeNotifier {
           .login(base64EncodedWithEncryptedPassword)) {
         updateAuthenticationModel(_authenticationService.data);
       } else {
-        logout();
+        //logout();
         _error = _authenticationService.error;
       }
     }

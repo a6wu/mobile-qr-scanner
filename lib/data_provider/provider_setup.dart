@@ -20,15 +20,5 @@ List<SingleChildWidget> independentServices = [
     },
   ),
 ];
-List<SingleChildWidget> dependentServices = [
-//  ChangeNotifierProxyProvider<UserDataProvider, MessagesDataProvider>(
-//      create: (_) {
-//    var messageDataProvider = MessagesDataProvider();
-//    return messageDataProvider;
-//  }, update: (_, userDataProvider, messageDataProvider) {
-//    messageDataProvider.userDataProvider = userDataProvider;
-//    messageDataProvider.fetchMessages();
-//    return messageDataProvider;
-//  }),
-];
+List<SingleChildWidget> dependentServices = [];
 List<SingleChildWidget> uiConsumableProviders = [];
