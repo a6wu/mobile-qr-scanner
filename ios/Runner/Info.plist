@@ -11,7 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Back to School Kit</string>
+	<string>UCSD Scan</string>
+	<key>CFBundleDisplayName</key>
+	<string>UCSD Scan</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
