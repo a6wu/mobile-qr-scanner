@@ -95,18 +95,23 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  Map<String, dynamic> createData() => {
-        'userId': _userDataProvider.getUsernameFromDevice(),
-        'barcode': qrText,
-        'uscdaffiliation':
-            _userDataProvider.authenticationModel.ucsdaffiliation,
-        'scannedDate': timeScanned
-      };
+  Future<Map<String, dynamic>> createData() async {
+    return {
+      'userId': await _userDataProvider.getUsernameFromDevice(),
+      'barcode': qrText,
+      'uscdaffiliation':
+        _userDataProvider.authenticationModel.ucsdaffiliation,
+      'scannedDate': timeScanned
+    };
+  }
 
   submitBarcode(qrText) async {
     var barcodeService = BarcodeService();
     var results = await barcodeService
-        .uploadResults({"Content-Type": "application/json"}, createData());
+        .uploadResults(
+          {"Content-Type": "application/json"},
+          await createData(),
+        );
 
     if (results) {
       setState(() {
