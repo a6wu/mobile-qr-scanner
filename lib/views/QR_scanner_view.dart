@@ -107,11 +107,10 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   submitBarcode(qrText) async {
     var barcodeService = BarcodeService();
+    var tempData = await createData();
+    print(tempData);
     var results = await barcodeService
-        .uploadResults(
-          {"Content-Type": "application/json"},
-          await createData(),
-        );
+        .uploadResults({"Content-Type": "application/json"}, tempData);
 
     if (results) {
       setState(() {
