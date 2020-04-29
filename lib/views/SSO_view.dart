@@ -25,9 +25,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _userDataProvider.isLoading
-          ? buildLoadingIndicator()
-          : _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
+      body: _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
     );
   }
 
@@ -65,14 +63,14 @@ class _SSOLoginViewState extends State<SSOLoginView> {
               children: <Widget>[
                 Expanded(
                   child: FlatButton(
-                    child: Text('Sign In'),
+                    child: _userDataProvider.isLoading
+                        ? buildLoadingIndicator()
+                        : Text('Sign In'),
                     onPressed: _userDataProvider.isLoading
                         ? null
-                        : () {
-                            _userDataProvider.login(
-                                _emailTextFieldController.text,
-                                _passwordTextFieldController.text);
-                          },
+                        : () => _userDataProvider.login(
+                            _emailTextFieldController.text,
+                            _passwordTextFieldController.text),
                     color: Theme.of(context).buttonColor,
                     textColor: Theme.of(context).textTheme.button.color,
                   ),

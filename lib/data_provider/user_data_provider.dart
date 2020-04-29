@@ -52,10 +52,12 @@ class UserDataProvider extends ChangeNotifier {
     //check to see if we have added the authentication model into the box already
     if (box.get('AuthenticationModel') == null) {
       await box.put('AuthenticationModel', temp);
+      _authenticationModel = temp;
+    } else {
+      temp = box.get('AuthenticationModel');
+      _authenticationModel = temp;
+      await refreshToken();
     }
-    temp = box.get('AuthenticationModel');
-    _authenticationModel = temp;
-    await refreshToken();
   }
 
   ///Save encrypted password to device
@@ -118,7 +120,7 @@ class UserDataProvider extends ChangeNotifier {
           base64.encode(utf8.encode(username + ':' + encryptedPassword));
       if (await _authenticationService
           .login(base64EncodedWithEncryptedPassword)) {
-        updateAuthenticationModel(_authenticationService.data);
+        await updateAuthenticationModel(_authenticationService.data);
       } else {
         //logout();
         _error = _authenticationService.error;
@@ -159,6 +161,8 @@ class UserDataProvider extends ChangeNotifier {
   ///TODO: check if we need to change the loading boolean since this is a silent login mechanism
   Future refreshToken() async {
     _error = null;
+    _isLoading = true;
+    notifyListeners();
     if (await _authenticationService
         .refreshAccessToken(_authenticationModel.refreshToken)) {
       /// this is only added to refresh token method because the response for the refresh token does not include
@@ -177,6 +181,7 @@ class UserDataProvider extends ChangeNotifier {
       ///Try to use user's credentials to login again
       await silentLogin();
     }
+    _isLoading = false;
     notifyListeners();
   }
 

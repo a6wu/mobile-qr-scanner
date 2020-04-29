@@ -14,7 +14,7 @@ List<SingleChildWidget> independentServices = [
       var _userDataProvider = UserDataProvider();
 
       /// try to load any persistent saved data
-      /// once loaded from memory reauthenticat user
+      /// once loaded from memory reauthenticate user
       _userDataProvider.loadSavedData();
       return _userDataProvider;
     },
