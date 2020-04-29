@@ -26,6 +26,7 @@ class UserDataProvider extends ChangeNotifier {
   bool _isLoading;
   DateTime _lastUpdated;
   String _error;
+  String _username;
 
   ///MODELS
   AuthenticationModel _authenticationModel;
@@ -75,10 +76,6 @@ class UserDataProvider extends ChangeNotifier {
   ///Get email from device
   Future<String> getUsernameFromDevice() {
     return storage.read(key: 'username');
-  }
-
-  String getUserNameNotAsync() {
-    getUsernameFromDevice().then((value) => value);
   }
 
   void deleteUsernameFromDevice() {
@@ -191,4 +188,5 @@ class UserDataProvider extends ChangeNotifier {
   bool get isLoggedIn => _authenticationModel.isLoggedIn(_lastUpdated);
   bool get isLoading => _isLoading;
   DateTime get lastUpdated => _lastUpdated;
+  String get username => _username;
 }

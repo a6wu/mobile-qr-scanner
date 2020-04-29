@@ -68,7 +68,7 @@ class AuthenticationModel extends HiveObject {
     }
     if (DateTime.now()
         .isAfter(lastUpdated.add(Duration(seconds: expiration)))) {
-      return false;
+      return true;
     }
     return true;
   }

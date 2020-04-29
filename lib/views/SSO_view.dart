@@ -27,9 +27,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     return Scaffold(
       body: _userDataProvider.isLoading
           ? buildLoadingIndicator()
-          : _userDataProvider.getUserNameNotAsync() == null
-              ? buildLoginWidget()
-              : QRViewExample(),
+          : _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
     );
   }
 
