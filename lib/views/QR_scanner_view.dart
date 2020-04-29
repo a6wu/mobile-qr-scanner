@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/services/barcode_service.dart';
 import 'package:flutter/material.dart';
@@ -99,9 +97,9 @@ class _QRViewExampleState extends State<QRViewExample> {
     return {
       'userId': await _userDataProvider.getUsernameFromDevice(),
       'barcode': qrText,
-      'uscdaffiliation':
-        _userDataProvider.authenticationModel.ucsdaffiliation,
-      'scannedDate': timeScanned
+      'uscdaffiliation': _userDataProvider.authenticationModel.ucsdaffiliation,
+      'scannedDate': timeScanned,
+      'pid': _userDataProvider.authenticationModel.pid
     };
   }
 

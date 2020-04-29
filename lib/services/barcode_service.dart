@@ -7,7 +7,7 @@ class BarcodeService {
 
   final NetworkHelper _networkHelper = NetworkHelper();
   final String _endpoint =
-      'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcode';
+      'https://s8htpmldd3.execute-api.us-west-2.amazonaws.com/dev/barcodeV2';
 
   Future<bool> uploadResults(
       Map<String, String> headers, Map<String, dynamic> body) async {

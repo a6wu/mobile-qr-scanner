@@ -170,6 +170,7 @@ class UserDataProvider extends ChangeNotifier {
       if (_authenticationModel.ucsdaffiliation != null) {
         AuthenticationModel finalModel = _authenticationService.data;
         finalModel.ucsdaffiliation = _authenticationModel.ucsdaffiliation;
+        finalModel.pid = _authenticationModel.pid;
       }
       await updateAuthenticationModel(_authenticationService.data);
     } else {
