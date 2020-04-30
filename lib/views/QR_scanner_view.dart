@@ -94,12 +94,18 @@ class _QRViewExampleState extends State<QRViewExample> {
   }
 
   Future<Map<String, dynamic>> createData() async {
+    final pattern = RegExp('[BGJMU]');
+    var pid;
+    if (_userDataProvider.authenticationModel.ucsdaffiliation
+        .contains(pattern)) {
+      pid = _userDataProvider.authenticationModel.pid;
+    }
     return {
       'userId': await _userDataProvider.getUsernameFromDevice(),
       'barcode': qrText,
       'uscdaffiliation': _userDataProvider.authenticationModel.ucsdaffiliation,
       'scannedDate': timeScanned,
-      'pid': _userDataProvider.authenticationModel.pid
+      'pid': pid
     };
   }
 
