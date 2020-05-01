@@ -1,5 +1,5 @@
 import 'package:backtoschool/data_provider/user_data_provider.dart';
-import 'package:backtoschool/navigation/route_paths.dart';
+import 'package:backtoschool/views/container_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +24,9 @@ class _SSOLoginViewState extends State<SSOLoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
+    return ContainerView(
+      child:
+          _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
     );
   }
 

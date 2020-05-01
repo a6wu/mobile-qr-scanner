@@ -37,37 +37,43 @@ class _QRViewExampleState extends State<QRViewExample> {
           flex: 4,
         ),
         Expanded(
-          child: FittedBox(
-            fit: BoxFit.contain,
+          child: Container(
+            constraints: BoxConstraints.expand(),
+            color: Colors.white,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: Provider.of<BarcodeDataProvider>(context)
-                      .qrText
-                      .isNotEmpty
-                  ? <Widget>[
-                      Text(Provider.of<BarcodeDataProvider>(context).qrText),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.all(8.0),
-                            child: FlatButton(
-                              onPressed: () => Provider.of<BarcodeDataProvider>(
-                                      context,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Provider.of<BarcodeDataProvider>(context).qrText.isNotEmpty
+                      ? Text(Provider.of<BarcodeDataProvider>(context).qrText,
+                          style: TextStyle(fontSize: 20))
+                      : Text("Please scan a test kit.",
+                          style: TextStyle(fontSize: 20)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          disabledColor: Colors.grey,
+                          onPressed: Provider.of<BarcodeDataProvider>(context)
+                                  .qrText
+                                  .isNotEmpty
+                              ? () => Provider.of<BarcodeDataProvider>(context,
                                       listen: false)
-                                  .submitBarcode(),
-                              child: Text(
-                                  Provider.of<BarcodeDataProvider>(context)
-                                      .submitState,
-                                  style: TextStyle(fontSize: 20)),
-                            ),
-                          ),
-                        ],
+                                  .submitBarcode()
+                              : null,
+                          child: Text(
+                              Provider.of<BarcodeDataProvider>(context)
+                                  .submitState,
+                              style: TextStyle(fontSize: 20)),
+                          color: Theme.of(context).buttonColor,
+                          textColor: Theme.of(context).textTheme.button.color,
+                        ),
                       ),
-                    ]
-                  : <Widget>[Text("Please scan a test kit.")],
-            ),
+                    ],
+                  ),
+                ]),
           ),
           flex: 1,
         )
