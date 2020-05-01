@@ -39,7 +39,7 @@ class _QRViewExampleState extends State<QRViewExample> {
         Expanded(
           child: Container(
             constraints: BoxConstraints.expand(),
-            color: Colors.grey,
+            color: Color.fromRGBO(237, 236, 236, 1.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -56,7 +56,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                         margin: EdgeInsets.all(8.0),
                         child: FlatButton(
                           disabledTextColor: Colors.black,
-                          disabledColor: Color.fromRGBO(237, 236, 236, 1.0),
+                          disabledColor: Color.fromRGBO(218, 218, 218, 1.0),
                           onPressed: Provider.of<BarcodeDataProvider>(context)
                                   .qrText
                                   .isNotEmpty
