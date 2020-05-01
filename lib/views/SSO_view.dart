@@ -78,8 +78,6 @@ class _SSOLoginViewState extends State<SSOLoginView> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Center(child: Text('Need help logging in?')),
           ],
         ),
       ),
