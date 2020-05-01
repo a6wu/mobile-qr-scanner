@@ -63,7 +63,7 @@ class AuthenticationModel extends HiveObject {
     if (lastUpdated == null) {
       return false;
     }
-    if (expiration == null) {
+    if (expiration == 0) {
       return false;
     }
     if (DateTime.now()
