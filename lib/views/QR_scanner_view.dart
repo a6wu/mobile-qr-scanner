@@ -55,7 +55,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                       Container(
                         margin: EdgeInsets.all(8.0),
                         child: FlatButton(
-                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.black,
+                          disabledColor: Color.fromRGBO(237, 236, 236, 1.0),
                           onPressed: Provider.of<BarcodeDataProvider>(context)
                                   .qrText
                                   .isNotEmpty
