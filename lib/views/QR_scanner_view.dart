@@ -39,7 +39,7 @@ class _QRViewExampleState extends State<QRViewExample> {
         Expanded(
           child: Container(
             constraints: BoxConstraints.expand(),
-            color: Colors.white,
+            color: Colors.grey,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
