@@ -27,7 +27,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                 Provider.of<BarcodeDataProvider>(context, listen: false)
                     .onQRViewCreated,
             overlay: QrScannerOverlayShape(
-              borderColor: Colors.red,
+              borderColor: Colors.green,
               borderRadius: 10,
               borderLength: 30,
               borderWidth: 10,
