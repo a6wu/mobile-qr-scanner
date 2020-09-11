@@ -17,6 +17,7 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         Expanded(

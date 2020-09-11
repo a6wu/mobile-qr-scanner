@@ -34,7 +34,12 @@ class BarcodeDataProvider extends ChangeNotifier {
   ///SERVICES
   BarcodeService _barcodeService;
 
+  var ucsdAffiliation = "";
+  var accessToken = "";
   void onQRViewCreated(QRViewController controller) {
+    ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
+    accessToken = _userDataProvider.authenticationModel.accessToken;
+    print("Access token: " + _userDataProvider.authenticationModel.accessToken);
     this._controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (_qrText != scanData) {
@@ -46,19 +51,10 @@ class BarcodeDataProvider extends ChangeNotifier {
     });
   }
 
-  Future<Map<String, dynamic>> createData() async {
-    final pattern = RegExp('[BGJMU]');
-    var pid = "";
-    if (_userDataProvider.authenticationModel.ucsdaffiliation
-        .contains(pattern)) {
-      pid = _userDataProvider.authenticationModel.pid;
-    }
+   Map<String, dynamic> createData()  {
     return {
-      'userId': await _userDataProvider.getUsernameFromDevice(),
       'barcode': _qrText,
-      'uscdaffiliation': _userDataProvider.authenticationModel.ucsdaffiliation,
-      'scannedDate': _timeScanned.toString(),
-      'pid': pid
+      'ucsdaffiliation':ucsdAffiliation,
     };
   }
 
@@ -67,11 +63,10 @@ class BarcodeDataProvider extends ChangeNotifier {
       _isLoading = true;
       _submitState = submit_btn_inactive;
       notifyListeners();
-      var tempData = await createData();
+      var tempData =  createData();
       var headers = {
         "Content-Type": "application/json",
-        'Authorization':
-            'Bearer ${_userDataProvider.authenticationModel.accessToken}'
+        'Authorization': 'Bearer $accessToken'
       };
       var results = await _barcodeService.uploadResults(headers, tempData);
       if (results) {
