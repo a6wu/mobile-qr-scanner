@@ -1,4 +1,4 @@
-import 'package:backtoschool/navigation/router.dart';
+import 'package:backtoschool/navigation/router.dart' as appRouter;
 import 'package:backtoschool/views/SSO_view.dart';
 import 'package:flutter/material.dart';
 import 'package:backtoschool/app_theme.dart';
@@ -57,7 +57,7 @@ class TabBarApp extends StatelessWidget {
           appBarTheme: lightAppBarTheme,
         ),
         home: SSOLoginView(),
-        onGenerateRoute: Router.generateRoute,
+        onGenerateRoute: appRouter.Router.generateRoute,
       ),
     );
   }

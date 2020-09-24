@@ -1,7 +1,8 @@
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/services/barcode_service.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+// import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../constants.dart';
 
@@ -29,27 +30,29 @@ class BarcodeDataProvider extends ChangeNotifier {
 
   ///MODELS
   UserDataProvider _userDataProvider;
-  QRViewController _controller;
+  BarcodeScanner _controller;
 
   ///SERVICES
   BarcodeService _barcodeService;
 
   var ucsdAffiliation = "";
   var accessToken = "";
-  void onQRViewCreated(QRViewController controller) {
-    ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
-    accessToken = _userDataProvider.authenticationModel.accessToken;
-    // print("Access token: " + _userDataProvider.authenticationModel.accessToken);
-    this._controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      if (_qrText != scanData) {
-        _qrText = scanData;
-        _timeScanned = DateTime.now().millisecondsSinceEpoch;
-        _submitState = submit_btn_active;
-        notifyListeners();
-      }
-    });
-  }
+  // Future<void> onQRViewCreated(BarcodeScanner controller) async {
+  //   ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
+  //   accessToken = _userDataProvider.authenticationModel.accessToken;
+  //   // print("Access token: " + _userDataProvider.authenticationModel.accessToken);
+  //   // this._controller = controller;
+  //   var result = await BarcodeScanner.scan();
+
+  //   controller.scannedDataStream.listen((scanData) {
+  //     if (_qrText != scanData) {
+  //       _qrText = scanData;
+  //       _timeScanned = DateTime.now().millisecondsSinceEpoch;
+  //       _submitState = submit_btn_active;
+  //       notifyListeners();
+  //     }
+  //   });
+  // }
 
   Map<String, dynamic> createData() {
     return {
@@ -77,10 +80,6 @@ class BarcodeDataProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
-  }
-
-  void disposeController() {
-    _controller.dispose();
   }
 
   ///SIMPLE GETTERS
