@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:backtoschool/data_provider/user_data_provider.dart';
+import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:backtoschool/services/barcode_service.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 //import 'package:campus_mobile_experimental/core/constants/app_constants.dart';
@@ -64,8 +65,9 @@ class _ScannerState extends State<Scanner> {
           leading: IconButton(
             icon: const Icon(Icons.chevron_left, color: Colors.white),
             onPressed: () {
-              Navigator.of(context).pop();
-              print('\n\nBack button pressed');
+              _userDataProvider.logout();
+              Navigator.pop(context);
+              Navigator.pushNamed(context, RoutePaths.Home);
             },
           ),
           elevation: 0.0,
