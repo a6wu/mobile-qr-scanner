@@ -36,12 +36,12 @@ const MaterialColor ColorSecondary = MaterialColor(
 
 //Color for the top App Bar on light theme
 const AppBarTheme lightAppBarTheme = AppBarTheme(
-  color: Color(0xFF034262),
+  color: ColorPrimary,
 );
 
 //Color for the top App Bar on dark theme
 const AppBarTheme darkAppBarTheme = AppBarTheme(
-  color: Color(0xFF034262),
+  color: ColorPrimary,
 );
 
 //Icon color for light theme

@@ -17,67 +17,68 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         Expanded(
-          child: QRView(
-            key: qrKey,
-            onQRViewCreated:
-                Provider.of<BarcodeDataProvider>(context, listen: false)
-                    .onQRViewCreated,
-            overlay: QrScannerOverlayShape(
-              borderColor: Color.fromRGBO(54, 216, 113, 1.0),
-              borderRadius: 10,
-              borderLength: 30,
-              borderWidth: 10,
-              cutOutSize: 300,
+          child: Container(
+            color: Colors.black,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated:
+                  Provider.of<BarcodeDataProvider>(context, listen: false)
+                      .onQRViewCreated,
+              overlay: QrScannerOverlayShape(
+                borderColor: Color.fromRGBO(54, 216, 113, 1.0),
+                borderRadius: 10,
+                borderLength: 30,
+                borderWidth: 10,
+                cutOutSize: 260,
+              ),
             ),
           ),
-          flex: 4,
-        ),
-        Expanded(
-          child: Container(
-            constraints: BoxConstraints.expand(),
-            color: Color.fromRGBO(237, 236, 236, 1.0),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Provider.of<BarcodeDataProvider>(context).qrText.isNotEmpty
-                      ? Text(Provider.of<BarcodeDataProvider>(context).qrText,
-                          style: TextStyle(fontSize: 20))
-                      : Text("Please scan a test kit.",
-                          style: TextStyle(fontSize: 20)),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          disabledTextColor: Colors.black,
-                          disabledColor: Color.fromRGBO(218, 218, 218, 1.0),
-                          onPressed: Provider.of<BarcodeDataProvider>(context)
-                                  .qrText
-                                  .isNotEmpty
-                              ? () => Provider.of<BarcodeDataProvider>(context,
-                                      listen: false)
-                                  .submitBarcode()
-                              : null,
-                          child: Text(
-                              Provider.of<BarcodeDataProvider>(context)
-                                  .submitState,
-                              style: TextStyle(fontSize: 20)),
-                          color: Theme.of(context).buttonColor,
-                          textColor: Theme.of(context).textTheme.button.color,
-                        ),
-                      ),
-                    ],
-                  ),
-                ]),
-          ),
           flex: 1,
-        )
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.25,
+          color: Color.fromRGBO(236, 236, 236, 1.0),
+          padding: EdgeInsets.all(24.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Provider.of<BarcodeDataProvider>(context).qrText.isNotEmpty
+                    ? Text(Provider.of<BarcodeDataProvider>(context).qrText,
+                        style: TextStyle(fontSize: 32))
+                    : Text("Please scan a test kit.",
+                        style: TextStyle(fontSize: 32)),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(24.0),
+                      child: FlatButton(
+                        padding: EdgeInsets.all(24.0),
+                        disabledTextColor: Colors.black,
+                        disabledColor: Color.fromRGBO(218, 218, 218, 1.0),
+                        onPressed: Provider.of<BarcodeDataProvider>(context)
+                                .qrText
+                                .isNotEmpty
+                            ? () => Provider.of<BarcodeDataProvider>(context,
+                                    listen: false)
+                                .submitBarcode()
+                            : null,
+                        child: Text(
+                            Provider.of<BarcodeDataProvider>(context)
+                                .submitState,
+                            style: TextStyle(fontSize: 32)),
+                        color: Theme.of(context).buttonColor,
+                        textColor: Theme.of(context).textTheme.button.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ]),
+        ),
       ],
     );
   }

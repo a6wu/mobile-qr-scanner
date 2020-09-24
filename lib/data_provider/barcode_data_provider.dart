@@ -39,7 +39,7 @@ class BarcodeDataProvider extends ChangeNotifier {
   void onQRViewCreated(QRViewController controller) {
     ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
     accessToken = _userDataProvider.authenticationModel.accessToken;
-    print("Access token: " + _userDataProvider.authenticationModel.accessToken);
+    // print("Access token: " + _userDataProvider.authenticationModel.accessToken);
     this._controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (_qrText != scanData) {
@@ -51,10 +51,10 @@ class BarcodeDataProvider extends ChangeNotifier {
     });
   }
 
-   Map<String, dynamic> createData()  {
+  Map<String, dynamic> createData() {
     return {
       'barcode': _qrText,
-      'ucsdaffiliation':ucsdAffiliation,
+      'ucsdaffiliation': ucsdAffiliation,
     };
   }
 
@@ -63,7 +63,7 @@ class BarcodeDataProvider extends ChangeNotifier {
       _isLoading = true;
       _submitState = submit_btn_inactive;
       notifyListeners();
-      var tempData =  createData();
+      var tempData = createData();
       var headers = {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $accessToken'
