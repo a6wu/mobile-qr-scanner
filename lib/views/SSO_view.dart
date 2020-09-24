@@ -26,7 +26,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   Widget build(BuildContext context) {
     return ContainerView(
       child:
-          _userDataProvider.isLoggedIn ? QRViewExample() : buildLoginWidget(),
+          _userDataProvider.isLoggedIn ? Scanner() : buildLoginWidget(),
     );
   }
 

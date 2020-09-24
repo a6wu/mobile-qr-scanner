@@ -11,7 +11,7 @@ class Router {
         return MaterialPageRoute(builder: (_) => SSOLoginView());
         break;
       case RoutePaths.QrScanner:
-        return MaterialPageRoute(builder: (_) => QRViewExample());
+        return MaterialPageRoute(builder: (_) => Scanner());
         break;
     }
   }
