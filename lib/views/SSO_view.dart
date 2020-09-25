@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container_view.dart';
 import 'package:backtoschool/views/scanner.dart';
-import 'package:backtoschool/views/scanner.dart';
+// import 'package:backtoschool/views/scanner.dart';
 // import 'package:backtoschool/views/scanner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // import 'QR_scanner_view.dart';
 
@@ -17,6 +21,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
   UserDataProvider _userDataProvider;
+  StreamSubscription _sub;
 
   @override
   void didChangeDependencies() {
@@ -28,10 +33,56 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   @override
   Widget build(BuildContext context) {
     return ContainerView(
-      child:
-          _userDataProvider.isLoggedIn ? ScannerCard() : buildLoginWidget(),
+      child: _userDataProvider.isLoggedIn
+          ? generateScannerUrl()
+          : buildLoginWidget(),
     );
   }
+
+  final _url =
+      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
+  openLink(String url) async {
+    try {
+      launch(url, forceSafariVC: true);
+    } catch (e) {
+      // an error occurred, do nothing
+    }
+  }
+
+  generateScannerUrl() {
+    /// Verify that user is logged in
+    if (_userDataProvider.isLoggedIn) {
+      /// Initialize header
+      final Map<String, String> header = {
+        'Authorization':
+            'Bearer ${_userDataProvider?.authenticationModel?.accessToken}'
+      };
+    }
+    var tokenQueryString =
+        "token=" + '${_userDataProvider.authenticationModel.accessToken}';
+
+    var affiliationQueryString = "affiliation=" +
+        '${_userDataProvider.authenticationModel.ucsdaffiliation}';
+
+    var url = _url + "?" + tokenQueryString + "&" + affiliationQueryString;
+    initUniLinks();
+    openLink(url);
+  }
+
+  Future<Null> initUniLinks() async {
+    // ... check initialLink
+
+    // Attach a listener to the stream
+    _sub = getLinksStream().listen((String link) {
+      print(link);
+      // Parse the link and warn the user, if it is not correct
+    }, onError: (err) {
+      // Handle exception by warning the user their action did not succeed
+    });
+    // NOTE: Don't forget to call _sub.cancel() in dispose()
+  }
+
+  // window.location.replace("backtoschool://deeplinking.logoutUser/");
 
   Widget buildLoginWidget() {
     return Card(

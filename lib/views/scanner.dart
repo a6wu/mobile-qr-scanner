@@ -1,4 +1,5 @@
 import 'package:backtoschool/data_provider/user_data_provider.dart';
+import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,6 +12,11 @@ class ScannerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     _userDataProvider = Provider.of<UserDataProvider>(context);
     generateScannerUrl();
+    // _userDataProvider.logout();
+    Navigator.pop(context);
+    Navigator.of(context).pushNamed(RoutePaths.Home);
+
+    return Container();
   }
 
   final _url =
@@ -22,7 +28,6 @@ class ScannerCard extends StatelessWidget {
       // an error occurred, do nothing
     }
   }
-
 
   generateScannerUrl() {
     /// Verify that user is logged in

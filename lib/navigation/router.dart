@@ -1,3 +1,4 @@
+import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/navigation/route_paths.dart';
 // import 'package:backtoschool/views/QR_scanner_view.dart';
 import 'package:backtoschool/views/SSO_view.dart';
