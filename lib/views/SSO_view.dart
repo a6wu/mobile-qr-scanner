@@ -25,15 +25,14 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _userDataProvider = Provider.of<UserDataProvider>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    _userDataProvider = Provider.of<UserDataProvider>(context);
     return ContainerView(
-      child: _userDataProvider.isLoggedIn
-          ? generateScannerUrl(context)
-          : buildLoginWidget(),
+      child:
+          _userDataProvider.isLoggedIn ? logoutandReload() : buildLoginWidget(),
     );
   }
 
@@ -58,6 +57,23 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     }
   }
 
+  logoutandReload() {
+    generateScannerUrl(context);
+    // _userDataProvider.logout();
+    return RaisedButton(
+      child: Text("Logout!"),
+      onPressed: _logout,
+      color: Colors.red,
+      textColor: Colors.yellow,
+      splashColor: Colors.grey,
+    );
+  }
+
+  _logout() {
+    print("Logging Out");
+    _userDataProvider.logout();
+  }
+
   generateScannerUrl(BuildContext context) {
     /// Verify that user is logged in
     if (_userDataProvider.isLoggedIn) {
@@ -78,15 +94,14 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     openLink(url);
   }
 
-  Future<Null> initUniLinks(context) async {
+  Future<Null> initUniLinks(BuildContext context) async {
     // ... check initialLink
 
     // Attach a listener to the stream
     _sub = getLinksStream().listen((String link) {
       print(link);
-      _userDataProvider.logout();
-      // Navigator.pushNamed(context, RoutePaths.Home);
-      setState(context);
+      // _userDataProvider.logout();
+      _logout();
       // Parse the link and warn the user, if it is not correct
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
