@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../app_theme.dart';
+
 // import 'QR_scanner_view.dart';
 
 class SSOLoginView extends StatefulWidget {
@@ -93,13 +95,20 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   Widget buildLoginWidget() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(50.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Single Sign-On'),
-            SizedBox(height: 10),
+            Text(
+              'Single Sign-On',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: ColorPrimary,
+              ),
+            ),
+            SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Email',
@@ -109,7 +118,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
               keyboardType: TextInputType.emailAddress,
               controller: _emailTextFieldController,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Password',
@@ -119,27 +128,37 @@ class _SSOLoginViewState extends State<SSOLoginView> {
               obscureText: true,
               controller: _passwordTextFieldController,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Row(
               children: <Widget>[
                 Expanded(
-                  child: FlatButton(
-                    child: _userDataProvider.isLoading
-                        ? buildLoadingIndicator()
-                        : Text('Sign In'),
-                    onPressed: _userDataProvider.isLoading
-                        ? null
-                        : () => _userDataProvider.login(
-                            _emailTextFieldController.text,
-                            _passwordTextFieldController.text),
-                    color: Theme.of(context).buttonColor,
-                    textColor: Theme.of(context).textTheme.button.color,
+                  child: Container(
+                    height: 60,
+                    child: FlatButton(
+                      child: _userDataProvider.isLoading
+                          ? buildLoadingIndicator()
+                          : Text('LOG IN',
+                              style: TextStyle(
+                                fontSize: 24,
+                              )),
+                      onPressed: _userDataProvider.isLoading
+                          ? null
+                          : () => _userDataProvider.login(
+                              _emailTextFieldController.text,
+                              _passwordTextFieldController.text),
+                      color: ColorPrimary,
+                      textColor: Theme.of(context).textTheme.button.color,
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Center(child: Text('Need help logging in?')),
+            SizedBox(height: 20),
+            Center(
+                child: Text('Need help logging in?',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ))),
           ],
         ),
       ),
