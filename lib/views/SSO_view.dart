@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container_view.dart';
-// import 'package:backtoschool/views/scanner.dart';
-// import 'package:backtoschool/views/scanner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
@@ -25,23 +23,27 @@ class _SSOLoginViewState extends State<SSOLoginView> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _userDataProvider = Provider.of<UserDataProvider>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    _userDataProvider = Provider.of<UserDataProvider>(context);
     return ContainerView(
-      child: _userDataProvider.isLoggedIn
-          ? generateScannerUrl(context)
-          : buildLoginWidget(),
+      child:
+          _userDataProvider.isLoggedIn ? logoutandReload() : buildLoginWidget(),
     );
   }
 
   @override
   void setState(fn) {
     super.setState(fn);
+  }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
   }
 
   final _url =
@@ -52,6 +54,22 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     } catch (e) {
       // an error occurred, do nothing
     }
+  }
+
+  logoutandReload() {
+    generateScannerUrl(context);
+    return RaisedButton(
+      child: Text("Logout!"),
+      onPressed: _logout,
+      color: Colors.red,
+      textColor: Colors.yellow,
+      splashColor: Colors.grey,
+    );
+  }
+
+  _logout() {
+    print("Logging Out");
+    _userDataProvider.logout();
   }
 
   generateScannerUrl(BuildContext context) {
@@ -74,23 +92,19 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     openLink(url);
   }
 
-  Future<Null> initUniLinks(context) async {
+  Future<Null> initUniLinks(BuildContext context) async {
     // ... check initialLink
 
     // Attach a listener to the stream
     _sub = getLinksStream().listen((String link) {
       print(link);
-      _userDataProvider.logout();
-      // Navigator.pushNamed(context, RoutePaths.Home);
-      setState(context);
+      // _userDataProvider.logout();
+      _logout();
       // Parse the link and warn the user, if it is not correct
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
     });
-    // NOTE: Don't forget to call _sub.cancel() in dispose()
   }
-
-  // window.location.replace("backtoschool://deeplinking.logoutUser/");
 
   Widget buildLoginWidget() {
     return Card(
