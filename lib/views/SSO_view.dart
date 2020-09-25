@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:js';
 
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/navigation/route_paths.dart';
@@ -40,6 +41,11 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     );
   }
 
+  @override
+  void setState(fn) {
+    super.setState(fn);
+  }
+
   final _url =
       'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
   openLink(String url) async {
@@ -66,18 +72,19 @@ class _SSOLoginViewState extends State<SSOLoginView> {
         '${_userDataProvider.authenticationModel.ucsdaffiliation}';
 
     var url = _url + "?" + tokenQueryString + "&" + affiliationQueryString;
-    initUniLinks();
+    initUniLinks(context);
     openLink(url);
   }
 
-  Future<Null> initUniLinks() async {
+  Future<Null> initUniLinks(context) async {
     // ... check initialLink
 
     // Attach a listener to the stream
     _sub = getLinksStream().listen((String link) {
       print(link);
       _userDataProvider.logout();
-      Navigator.pushNamed(context, RoutePaths.Home);
+      // Navigator.pushNamed(context, RoutePaths.Home);
+      setState(context);
       // Parse the link and warn the user, if it is not correct
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
