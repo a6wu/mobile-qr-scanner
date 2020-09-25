@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:js';
-
 import 'package:backtoschool/data_provider/user_data_provider.dart';
-import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:backtoschool/views/container_view.dart';
-import 'package:backtoschool/views/scanner.dart';
 // import 'package:backtoschool/views/scanner.dart';
 // import 'package:backtoschool/views/scanner_view.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +32,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   Widget build(BuildContext context) {
     return ContainerView(
       child: _userDataProvider.isLoggedIn
-          ? generateScannerUrl()
+          ? generateScannerUrl(context)
           : buildLoginWidget(),
     );
   }
@@ -56,7 +52,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     }
   }
 
-  generateScannerUrl() {
+  generateScannerUrl(BuildContext context) {
     /// Verify that user is logged in
     if (_userDataProvider.isLoggedIn) {
       /// Initialize header
