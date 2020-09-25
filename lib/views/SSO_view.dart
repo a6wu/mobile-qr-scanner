@@ -1,7 +1,8 @@
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container_view.dart';
-// import 'package:backtoschool/views/scanner.dart';
-import 'package:backtoschool/views/scanner_view.dart';
+import 'package:backtoschool/views/scanner.dart';
+import 'package:backtoschool/views/scanner.dart';
+// import 'package:backtoschool/views/scanner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

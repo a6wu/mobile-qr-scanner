@@ -32,12 +32,7 @@ dependencies:
   encrypt: 3.2.0
   flutter_secure_storage: 3.3.1+1
   shared_preferences: 0.5.6+3
-  barcode_scan: any
-  webview_flutter: 0.3.22+1
   url_launcher: 5.2.5
-
-
-
 
 dev_dependencies:
   flutter_test:
@@ -45,13 +40,11 @@ dev_dependencies:
   hive_generator: 0.7.1
   build_runner: 1.8.1
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
