@@ -75,6 +75,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     // Attach a listener to the stream
     _sub = getLinksStream().listen((String link) {
       print(link);
+      _userDataProvider.logout();
       // Parse the link and warn the user, if it is not correct
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
