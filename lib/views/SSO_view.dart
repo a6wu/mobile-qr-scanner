@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:backtoschool/data_provider/user_data_provider.dart';
+import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:backtoschool/views/container_view.dart';
 import 'package:backtoschool/views/scanner.dart';
 // import 'package:backtoschool/views/scanner.dart';
@@ -76,6 +77,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     _sub = getLinksStream().listen((String link) {
       print(link);
       _userDataProvider.logout();
+      Navigator.pushNamed(context, RoutePaths.Home);
       // Parse the link and warn the user, if it is not correct
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
