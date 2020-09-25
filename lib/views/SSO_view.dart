@@ -42,6 +42,12 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     super.setState(fn);
   }
 
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+
   final _url =
       'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
   openLink(String url) async {
