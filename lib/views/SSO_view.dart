@@ -1,14 +1,10 @@
 import 'dart:async';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container_view.dart';
-// import 'package:backtoschool/views/scanner.dart';
-// import 'package:backtoschool/views/scanner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-// import 'QR_scanner_view.dart';
 
 class SSOLoginView extends StatefulWidget {
   @override
@@ -23,7 +19,6 @@ class _SSOLoginViewState extends State<SSOLoginView> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
@@ -59,7 +54,6 @@ class _SSOLoginViewState extends State<SSOLoginView> {
 
   logoutandReload() {
     generateScannerUrl(context);
-    // _userDataProvider.logout();
     return RaisedButton(
       child: Text("Logout!"),
       onPressed: _logout,
@@ -106,10 +100,8 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
     });
-    // NOTE: Don't forget to call _sub.cancel() in dispose()
   }
 
-  // window.location.replace("backtoschool://deeplinking.logoutUser/");
 
   Widget buildLoginWidget() {
     return Card(
