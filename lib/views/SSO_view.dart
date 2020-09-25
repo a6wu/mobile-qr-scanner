@@ -1,9 +1,11 @@
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container_view.dart';
+// import 'package:backtoschool/views/scanner.dart';
+import 'package:backtoschool/views/scanner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'QR_scanner_view.dart';
+// import 'QR_scanner_view.dart';
 
 class SSOLoginView extends StatefulWidget {
   @override
@@ -26,7 +28,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   Widget build(BuildContext context) {
     return ContainerView(
       child:
-          _userDataProvider.isLoggedIn ? Scanner() : buildLoginWidget(),
+          _userDataProvider.isLoggedIn ? ScannerCard() : buildLoginWidget(),
     );
   }
 
