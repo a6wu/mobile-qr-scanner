@@ -1,19 +1,18 @@
-import 'package:backtoschool/navigation/router.dart' as appRouter;
-import 'package:backtoschool/views/SSO_view.dart';
-import 'package:flutter/material.dart';
 import 'package:backtoschool/app_theme.dart';
+import 'package:backtoschool/navigation/router.dart' as appRouter;
+import 'package:backtoschool/views/login.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 import 'data_provider/provider_setup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await initializeStorage();
-
   runApp(TabBarApp());
 }
 
@@ -56,7 +55,7 @@ class TabBarApp extends StatelessWidget {
           iconTheme: lightIconTheme,
           appBarTheme: lightAppBarTheme,
         ),
-        home: SSOLoginView(),
+        home: LoginView(),
         onGenerateRoute: appRouter.Router.generateRoute,
       ),
     );

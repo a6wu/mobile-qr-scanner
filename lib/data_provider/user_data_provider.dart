@@ -1,13 +1,14 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:backtoschool/models/authentication_model.dart';
 import 'package:backtoschool/services/authentication_service.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:pointycastle/asymmetric/oaep.dart';
 import 'package:pointycastle/pointycastle.dart' as pc;
-import 'dart:typed_data';
-import 'package:encrypt/encrypt.dart';
-import 'dart:convert';
 
 class UserDataProvider extends ChangeNotifier {
   UserDataProvider() {
@@ -121,9 +122,11 @@ class UserDataProvider extends ChangeNotifier {
       if (await _authenticationService
           .login(base64EncodedWithEncryptedPassword)) {
         await updateAuthenticationModel(_authenticationService.data);
+        return true;
       } else {
-        //logout();
+        logout();
         _error = _authenticationService.error;
+        return false;
       }
     }
   }
@@ -131,7 +134,7 @@ class UserDataProvider extends ChangeNotifier {
   ///authenticate a user given an email and password
   ///upon logging in we should make sure that users upload the correct
   ///ucsdaffiliation and classification
-  void login(String username, String password) async {
+  Future<void> login(String username, String password) async {
     encryptLoginInfo(username, password);
     _error = null;
     _isLoading = true;
