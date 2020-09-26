@@ -1,6 +1,7 @@
 import 'dart:async';
+
 import 'package:backtoschool/data_provider/user_data_provider.dart';
-import 'package:backtoschool/views/container_view.dart';
+import 'package:backtoschool/views/container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
@@ -8,14 +9,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../app_theme.dart';
 
-// import 'QR_scanner_view.dart';
-
-class SSOLoginView extends StatefulWidget {
+class LoginView extends StatefulWidget {
   @override
-  _SSOLoginViewState createState() => _SSOLoginViewState();
+  _LoginViewState createState() => _LoginViewState();
 }
 
-class _SSOLoginViewState extends State<SSOLoginView> {
+class _LoginViewState extends State<LoginView> {
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
   UserDataProvider _userDataProvider;
@@ -30,10 +29,11 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   Widget build(BuildContext context) {
     _userDataProvider = Provider.of<UserDataProvider>(context);
     return ContainerView(
-      child:
-          _userDataProvider.isLoggedIn ? logoutandReload() : buildLoginWidget(),
+      child: buildLoginWidget(context),
     );
   }
+
+  // _userDataProvider.isLoggedIn ? logoutandReload() :
 
   @override
   void setState(fn) {
@@ -47,7 +47,8 @@ class _SSOLoginViewState extends State<SSOLoginView> {
   }
 
   final _url =
-      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
+      'https://mobile.ucsd.edu/replatform/v1/prod/webview/scanner-ipad/index.html';
+
   openLink(String url) async {
     try {
       launch(url, forceSafariVC: true);
@@ -56,23 +57,10 @@ class _SSOLoginViewState extends State<SSOLoginView> {
     }
   }
 
-  logoutandReload() {
-    generateScannerUrl(context);
-    return RaisedButton(
-      child: Text("Logout!"),
-      onPressed: _logout,
-      color: Colors.red,
-      textColor: Colors.yellow,
-      splashColor: Colors.grey,
-    );
-  }
+  generateScannerUrl(BuildContext context) async {
+    await _userDataProvider.login(
+        _emailTextFieldController.text, _passwordTextFieldController.text);
 
-  _logout() {
-    print("Logging Out");
-    _userDataProvider.logout();
-  }
-
-  generateScannerUrl(BuildContext context) {
     /// Verify that user is logged in
     if (_userDataProvider.isLoggedIn) {
       /// Initialize header
@@ -80,33 +68,34 @@ class _SSOLoginViewState extends State<SSOLoginView> {
         'Authorization':
             'Bearer ${_userDataProvider?.authenticationModel?.accessToken}'
       };
+      var tokenQueryString =
+          "token=" + '${_userDataProvider.authenticationModel.accessToken}';
+
+      var affiliationQueryString = "affiliation=" +
+          '${_userDataProvider.authenticationModel.ucsdaffiliation}';
+
+      var url = _url + "?" + tokenQueryString + "&" + affiliationQueryString;
+      initUniLinks(context);
+
+      _emailTextFieldController.clear();
+      _passwordTextFieldController.clear();
+
+      openLink(url);
     }
-    var tokenQueryString =
-        "token=" + '${_userDataProvider.authenticationModel.accessToken}';
-
-    var affiliationQueryString = "affiliation=" +
-        '${_userDataProvider.authenticationModel.ucsdaffiliation}';
-
-    var url = _url + "?" + tokenQueryString + "&" + affiliationQueryString;
-    initUniLinks(context);
-    openLink(url);
   }
 
   Future<Null> initUniLinks(BuildContext context) async {
-    // ... check initialLink
-
     // Attach a listener to the stream
-    _sub = getLinksStream().listen((String link) {
-      print(link);
-      // _userDataProvider.logout();
-      _logout();
-      // Parse the link and warn the user, if it is not correct
+    _sub = getLinksStream().listen((String link) async {
+      _userDataProvider.logout();
+      await closeWebView();
+      setState(() => {});
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
     });
   }
 
-  Widget buildLoginWidget() {
+  Widget buildLoginWidget(BuildContext context) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(50.0),
@@ -157,9 +146,7 @@ class _SSOLoginViewState extends State<SSOLoginView> {
                               )),
                       onPressed: _userDataProvider.isLoading
                           ? null
-                          : () => _userDataProvider.login(
-                              _emailTextFieldController.text,
-                              _passwordTextFieldController.text),
+                          : () => generateScannerUrl(context),
                       color: ColorPrimary,
                       textColor: Theme.of(context).textTheme.button.color,
                     ),
