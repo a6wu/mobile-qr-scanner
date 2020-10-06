@@ -47,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   final _url =
-      'https://mobile.ucsd.edu/replatform/v1/prod/webview/scanner-ipad/index.html';
+      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
 
   openLink(String url) async {
     try {
