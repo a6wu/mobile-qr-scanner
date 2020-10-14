@@ -20,6 +20,15 @@ class _LoginViewState extends State<LoginView> {
   UserDataProvider _userDataProvider;
   StreamSubscription _sub;
 
+  bool _passwordObscured = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _passwordObscured = !_passwordObscured;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -125,10 +134,19 @@ class _LoginViewState extends State<LoginView> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Based on passwordObscured state choose the icon
+                    _passwordObscured ? Icons.visibility : Icons.visibility_off,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+                  onPressed: () => _toggle(),
+                ),
                 border: OutlineInputBorder(),
                 labelText: 'Password',
               ),
-              obscureText: true,
+              obscureText: _passwordObscured,
+              keyboardType: TextInputType.emailAddress,
               controller: _passwordTextFieldController,
             ),
             SizedBox(height: 20),
