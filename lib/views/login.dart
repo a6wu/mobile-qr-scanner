@@ -15,18 +15,20 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _emailTextFieldController = TextEditingController();
-  final _passwordTextFieldController = TextEditingController();
   UserDataProvider _userDataProvider;
   StreamSubscription _sub;
-
+  FocusNode myFocusNode;
   bool _passwordObscured = true;
 
-  // Toggles the password show status
-  void _toggle() {
-    setState(() {
-      _passwordObscured = !_passwordObscured;
-    });
+  final _emailTextFieldController = TextEditingController();
+  final _passwordTextFieldController = TextEditingController();
+  final _iPadWebScannerURL =
+      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
+
+  @override
+  void initState() {
+    super.initState();
+    myFocusNode = FocusNode();
   }
 
   @override
@@ -42,8 +44,6 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  // _userDataProvider.isLoggedIn ? logoutandReload() :
-
   @override
   void setState(fn) {
     super.setState(fn);
@@ -52,11 +52,16 @@ class _LoginViewState extends State<LoginView> {
   @override
   void dispose() {
     _sub.cancel();
+    myFocusNode.dispose();
     super.dispose();
   }
 
-  final _url =
-      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _passwordObscured = !_passwordObscured;
+    });
+  }
 
   openLink(String url) async {
     try {
@@ -83,7 +88,11 @@ class _LoginViewState extends State<LoginView> {
       var affiliationQueryString = "affiliation=" +
           '${_userDataProvider.authenticationModel.ucsdaffiliation}';
 
-      var url = _url + "?" + tokenQueryString + "&" + affiliationQueryString;
+      var url = _iPadWebScannerURL +
+          "?" +
+          tokenQueryString +
+          "&" +
+          affiliationQueryString;
       initUniLinks(context);
 
       _emailTextFieldController.clear();
@@ -98,7 +107,8 @@ class _LoginViewState extends State<LoginView> {
     _sub = getLinksStream().listen((String link) async {
       _userDataProvider.logout();
       await closeWebView();
-      setState(() => {});
+      FocusScope.of(context).requestFocus(myFocusNode);
+      setState(() => {_passwordObscured = true});
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
     });
@@ -122,10 +132,12 @@ class _LoginViewState extends State<LoginView> {
             ),
             SizedBox(height: 20),
             TextField(
+              focusNode: myFocusNode,
+              autofocus: true,
               decoration: InputDecoration(
-                hintText: 'Email',
+                hintText: 'UCSD Email',
                 border: OutlineInputBorder(),
-                labelText: 'Email',
+                labelText: 'UCSD Email',
               ),
               keyboardType: TextInputType.emailAddress,
               controller: _emailTextFieldController,
@@ -137,7 +149,7 @@ class _LoginViewState extends State<LoginView> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     // Based on passwordObscured state choose the icon
-                    _passwordObscured ? Icons.visibility : Icons.visibility_off,
+                    _passwordObscured ? Icons.visibility_off : Icons.visibility,
                     color: Theme.of(context).primaryColorDark,
                   ),
                   onPressed: () => _toggle(),
@@ -157,7 +169,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 60,
                     child: FlatButton(
                       child: _userDataProvider.isLoading
-                          ? buildLoadingIndicator()
+                          ? BuildLoadingIndicator()
                           : Text('LOG IN',
                               style: TextStyle(
                                 fontSize: 24,
@@ -172,12 +184,6 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            Center(
-                child: Text('Need help logging in?',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ))),
           ],
         ),
       ),
@@ -185,8 +191,8 @@ class _LoginViewState extends State<LoginView> {
   }
 }
 
-class buildLoadingIndicator extends StatelessWidget {
-  const buildLoadingIndicator({
+class BuildLoadingIndicator extends StatelessWidget {
+  const BuildLoadingIndicator({
     Key key,
   }) : super(key: key);
 
