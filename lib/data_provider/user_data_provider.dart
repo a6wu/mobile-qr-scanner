@@ -104,6 +104,7 @@ class UserDataProvider extends ChangeNotifier {
     var cipher = OAEPEncoding(pc.AsymmetricBlockCipher('RSA'));
     pc.AsymmetricKeyParameter<pc.RSAPublicKey> keyParametersPublic =
         new pc.PublicKeyParameter(publicKey);
+        new pc.PublicKeyParameter(publicKey);
     cipher.init(true, keyParametersPublic);
     Uint8List output = cipher.process(utf8.encode(password));
     var base64EncodedText = base64.encode(output);

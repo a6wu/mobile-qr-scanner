@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container.dart';
+import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
@@ -63,42 +64,47 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-  openLink(String url) async {
-    try {
-      launch(url, forceSafariVC: true);
-    } catch (e) {
-      // an error occurred, do nothing
-    }
-  }
+//  openLink(String url) async {
+//    try {
+//      launch(url, forceSafariVC: true);
+//    } catch (e) {
+//      // an error occurred, do nothing
+//    }
+//  }
 
-  generateScannerUrl(BuildContext context) async {
+  navigateScanner(BuildContext context) async {
+    print(context);
     await _userDataProvider.login(
         _emailTextFieldController.text, _passwordTextFieldController.text);
 
     /// Verify that user is logged in
     if (_userDataProvider.isLoggedIn) {
-      /// Initialize header
-      final Map<String, String> header = {
-        'Authorization':
-            'Bearer ${_userDataProvider?.authenticationModel?.accessToken}'
-      };
-      var tokenQueryString =
-          "token=" + '${_userDataProvider.authenticationModel.accessToken}';
-
-      var affiliationQueryString = "affiliation=" +
-          '${_userDataProvider.authenticationModel.ucsdaffiliation}';
-
-      var url = _iPadWebScannerURL +
-          "?" +
-          tokenQueryString +
-          "&" +
-          affiliationQueryString;
-      initUniLinks(context);
-
-      _emailTextFieldController.clear();
-      _passwordTextFieldController.clear();
-
-      openLink(url);
+      Navigator.pushNamed(
+        context,
+        RoutePaths.ScanditScanner,
+      );
+//      /// Initialize header
+//      final Map<String, String> header = {
+//        'Authorization':
+//            'Bearer ${_userDataProvider?.authenticationModel?.accessToken}'
+//      };
+//      var tokenQueryString =
+//          "token=" + '${_userDataProvider.authenticationModel.accessToken}';
+//
+//      var affiliationQueryString = "affiliation=" +
+//          '${_userDataProvider.authenticationModel.ucsdaffiliation}';
+//
+//      var url = _iPadWebScannerURL +
+//          "?" +
+//          tokenQueryString +
+//          "&" +
+//          affiliationQueryString;
+//      initUniLinks(context);
+//
+//      _emailTextFieldController.clear();
+//      _passwordTextFieldController.clear();
+//
+//      openLink(url);
     }
   }
 
@@ -176,7 +182,7 @@ class _LoginViewState extends State<LoginView> {
                               )),
                       onPressed: _userDataProvider.isLoading
                           ? null
-                          : () => generateScannerUrl(context),
+                          : () => navigateScanner(context),
                       color: ColorPrimary,
                       textColor: Theme.of(context).textTheme.button.color,
                     ),
