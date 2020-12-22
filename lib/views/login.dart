@@ -64,14 +64,6 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-//  openLink(String url) async {
-//    try {
-//      launch(url, forceSafariVC: true);
-//    } catch (e) {
-//      // an error occurred, do nothing
-//    }
-//  }
-
   navigateScanner(BuildContext context) async {
     print(context);
     await _userDataProvider.login(
@@ -83,28 +75,6 @@ class _LoginViewState extends State<LoginView> {
         context,
         RoutePaths.ScanditScanner,
       );
-//      /// Initialize header
-//      final Map<String, String> header = {
-//        'Authorization':
-//            'Bearer ${_userDataProvider?.authenticationModel?.accessToken}'
-//      };
-//      var tokenQueryString =
-//          "token=" + '${_userDataProvider.authenticationModel.accessToken}';
-//
-//      var affiliationQueryString = "affiliation=" +
-//          '${_userDataProvider.authenticationModel.ucsdaffiliation}';
-//
-//      var url = _iPadWebScannerURL +
-//          "?" +
-//          tokenQueryString +
-//          "&" +
-//          affiliationQueryString;
-//      initUniLinks(context);
-//
-//      _emailTextFieldController.clear();
-//      _passwordTextFieldController.clear();
-//
-//      openLink(url);
     }
   }
 

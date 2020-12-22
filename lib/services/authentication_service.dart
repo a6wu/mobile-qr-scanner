@@ -12,7 +12,7 @@ class AuthenticationService {
 
   final NetworkHelper _networkHelper = NetworkHelper();
   final String endpoint =
-      'https://3hepzvdimd.execute-api.us-west-2.amazonaws.com/dev/v1.1/access-profile';
+      "https://3hepzvdimd.execute-api.us-west-2.amazonaws.com/qa/v2/access-profile";
 
   final String AUTH_SERVICE_API_KEY =
       'eKFql1kJAj53iyU2fNKyH4jI2b7t70MZ5YbAuPBZ';
@@ -45,26 +45,26 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> refreshAccessToken(String refreshToken) async {
-    _error = null;
-    final tokenHeaders = {'refresh_token': refreshToken};
-    try {
-      var response = await _networkHelper.authorizedPost(
-          refreshTokenEndpoint, tokenHeaders, null);
-      if (response['error'] != null) {
-        throw (response['error']);
-      }
-      final authenticationModel = AuthenticationModel.fromJson(response);
-      _data = authenticationModel;
-      _lastUpdated = DateTime.now();
-      return true;
-    } catch (e) {
-      ///TODO: check to see if error returned means the refresh token is expired
-      ///if refresh token is expired then try to reauthenticate using login method
-      _error = e.toString();
-      return false;
-    }
-  }
+//  Future<bool> refreshAccessToken(String refreshToken) async {
+//    _error = null;
+//    final tokenHeaders = {'refresh_token': refreshToken};
+//    try {
+//      var response = await _networkHelper.authorizedPost(
+//          refreshTokenEndpoint, tokenHeaders, null);
+//      if (response['error'] != null) {
+//        throw (response['error']);
+//      }
+//      final authenticationModel = AuthenticationModel.fromJson(response);
+//      _data = authenticationModel;
+//      _lastUpdated = DateTime.now();
+//      return true;
+//    } catch (e) {
+//      ///TODO: check to see if error returned means the refresh token is expired
+//      ///if refresh token is expired then try to reauthenticate using login method
+//      _error = e.toString();
+//      return false;
+//    }
+//  }
 
   DateTime get lastUpdated => _lastUpdated;
   AuthenticationModel get data => _data;

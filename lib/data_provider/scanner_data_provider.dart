@@ -3,6 +3,7 @@ import 'package:backtoschool/services/barcode.dart';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scandit_plugin/flutter_scandit_plugin.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class ScannerDataProvider extends ChangeNotifier {
@@ -28,6 +29,18 @@ class ScannerDataProvider extends ChangeNotifier {
   bool successfulSubmission;
   bool isValidBarcode;
   String _errorText;
+  PermissionStatus cameraPermissionsStatus = PermissionStatus.undetermined;
+
+  Future requestCameraPermissions() async {
+    var status = await Permission.camera.status;
+    if (!status.isGranted) {
+      status = await Permission.camera.request();
+    }
+
+    if (cameraPermissionsStatus != status) {
+      cameraPermissionsStatus = status;
+    }
+  }
 
   Map<String, dynamic> createUserData() {
     ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
@@ -57,7 +70,7 @@ class ScannerDataProvider extends ChangeNotifier {
       didError = true;
       isLoading = false;
       if (_barcodeService.error.contains(ErrorConstants.invalidBearerToken)) {
-        await _userDataProvider.refreshToken();
+        await _userDataProvider.silentLogin();
       } else if (_barcodeService.error
           .contains(ErrorConstants.duplicateRecord)) {
         print("in correct if");
