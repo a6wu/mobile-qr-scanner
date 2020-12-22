@@ -1,13 +1,9 @@
 import 'package:backtoschool/constants.dart';
-import 'package:backtoschool/app_theme.dart';
 import 'package:backtoschool/services/barcode.dart';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scandit_plugin/flutter_scandit_plugin.dart';
-import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class ScannerDataProvider extends ChangeNotifier {
   ScannerDataProvider() {
@@ -17,8 +13,6 @@ class ScannerDataProvider extends ChangeNotifier {
     _barcodeService = BarcodeService();
   }
 
-  String _message = '';
-  ScanditController _controller;
   bool hasScanned;
   bool hasSubmitted;
   bool didError;
@@ -29,38 +23,11 @@ class ScannerDataProvider extends ChangeNotifier {
   var ucsdAffiliation = "";
   var accessToken = "";
   String _barcode;
-  String _errorText;
   bool isLoading;
   bool isDuplicate;
   bool successfulSubmission;
   bool isValidBarcode;
-  PermissionStatus _cameraPermissionsStatus = PermissionStatus.undetermined;
-
-//  Future _requestCameraPermissions() async {
-//    var status = await Permission.camera.status;
-//    if (!status.isGranted) {
-//      status = await Permission.camera.request();
-//    }
-//
-//    if (_cameraPermissionsStatus != status) {
-//      _cameraPermissionsStatus = status;
-//    }
-//  }
-//
-//  @override
-//  void initState() {
-//    hasScanned = false;
-//    hasSubmitted = false;
-//    didError = false;
-//    successfulSubmission = false;
-//    isLoading = false;
-//    isDuplicate = false;
-//    isValidBarcode = true;
-//    _errorText = "Something went wrong, please try again.";
-//
-//    WidgetsBinding.instance
-//        .addPostFrameCallback((_) => _requestCameraPermissions());
-//  }
+  String _errorText;
 
   Map<String, dynamic> createUserData() {
     ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
@@ -103,12 +70,4 @@ class ScannerDataProvider extends ChangeNotifier {
       //_submitted = true;
     }
   }
-
-//  openLink(String url) async {
-//    try {
-//      launch(url, forceSafariVC: true);
-//    } catch (e) {
-//      // an error occurred, do nothing
-//    }
-//  }
 }

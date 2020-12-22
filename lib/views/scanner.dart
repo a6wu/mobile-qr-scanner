@@ -1,6 +1,4 @@
-import 'package:backtoschool/constants.dart';
 import 'package:backtoschool/app_theme.dart';
-import 'package:backtoschool/services/barcode.dart';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/data_provider/scanner_data_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,7 @@ class _ScanditScannerState extends State<ScanditScanner> {
   bool hasSubmitted;
   bool didError;
   String licenseKey;
-  BarcodeService _barcodeService = new BarcodeService();
+  ScannerDataProvider _scannerDataProvider;
   UserDataProvider _userDataProvider;
   set userDataProvider(UserDataProvider value) => _userDataProvider = value;
   var ucsdAffiliation = "";
@@ -34,7 +32,7 @@ class _ScanditScannerState extends State<ScanditScanner> {
   bool successfulSubmission;
   bool isValidBarcode;
   PermissionStatus _cameraPermissionsStatus = PermissionStatus.undetermined;
-  ScannerDataProvider _scannerDataProvider;
+
 
   Future _requestCameraPermissions() async {
     var status = await Permission.camera.status;
@@ -144,14 +142,6 @@ class _ScanditScannerState extends State<ScanditScanner> {
       return (renderFailureScreen(context));
     }
   }
-
-//  Map<String, dynamic> createUserData() {
-//    this.setState(() {
-//      ucsdAffiliation = _userDataProvider.authenticationModel.ucsdaffiliation;
-//      accessToken = _userDataProvider.authenticationModel.accessToken;
-//    });
-//    return {'barcode': _barcode, 'ucsdaffiliation': ucsdAffiliation};
-//  }
 
   Widget renderFailureScreen(BuildContext context) {
     return (Column(
@@ -280,55 +270,6 @@ class _ScanditScannerState extends State<ScanditScanner> {
       ],
     );
   }
-
-//  Future<void> _handleBarcodeResult(BarcodeResult result) async {
-//    this.setState(() {
-//      hasScanned = true;
-//      _barcode = result.data;
-//    });
-//    var data = createUserData();
-//    var headers = {
-//      "Content-Type": "application/json",
-//      'Authorization': 'Bearer ${accessToken}'
-//    };
-//    setState(() {
-//      isLoading = true;
-//    });
-//    var results = await _barcodeService.uploadResults(headers, data);
-//
-//    if (results) {
-//      this.setState(() {
-//        isLoading = false;
-//        didError = false;
-//        successfulSubmission = true;
-//      });
-//    } else {
-//      print(_barcodeService.error);
-//      print("error constant: " + ErrorConstants.duplicateRecord);
-//      this.setState(() {
-//        successfulSubmission = false;
-//        didError = true;
-//        isLoading = false;
-//      });
-//      if (_barcodeService.error.contains(ErrorConstants.invalidBearerToken)) {
-//        await _userDataProvider.refreshToken();
-//      } else if (_barcodeService.error
-//          .contains(ErrorConstants.duplicateRecord)) {
-//        print("in correct if");
-//        this.setState(() {
-//          _errorText =
-//          "Submission failed due to barcode already scanned. Please scan another barcode.";
-//          isDuplicate = true;
-//        });
-//      } else if (_barcodeService.error.contains(ErrorConstants.invalidMedia)) {
-//        this.setState(() {
-//          _errorText = "Barcode is not valid. Please scan another barcode.";
-//          isValidBarcode = false;
-//        });
-//      }
-//      //_submitted = true;
-//    }
-//  }
 
   openLink(String url) async {
     try {
