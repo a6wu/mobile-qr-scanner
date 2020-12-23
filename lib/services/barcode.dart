@@ -14,6 +14,7 @@ class BarcodeService {
     _error = null;
     _isLoading = true;
     try {
+      print(headers);
       final response =
       await _networkHelper.authorizedPost(_endpoint, headers, body);
       if (response != null &&

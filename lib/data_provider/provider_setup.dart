@@ -23,11 +23,22 @@ List<SingleChildWidget> independentServices = [
   ChangeNotifierProvider<CustomAppBar>(
     create: (_) => CustomAppBar(),
   ),
-  ChangeNotifierProvider<ScannerDataProvider>(
+  ChangeNotifierProxyProvider<UserDataProvider, ScannerDataProvider>(
     create: (_) {
       var _scannerDataProvider = ScannerDataProvider();
+      _scannerDataProvider.requestCameraPermissions();
+      _scannerDataProvider.initState();
+      _scannerDataProvider.setDefaultStates();
       return _scannerDataProvider;
-  })
+  },
+    update: (_, _userDataProvider, scannerDataProvider) {
+      scannerDataProvider.userDataProvider = _userDataProvider;
+      scannerDataProvider.initState();
+      scannerDataProvider.setDefaultStates();
+      return scannerDataProvider;
+    },
+    lazy: false,
+  )
 ];
 
 List<SingleChildWidget> uiConsumableProviders = [];
