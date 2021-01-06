@@ -23,8 +23,6 @@ class _LoginViewState extends State<LoginView> {
 
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
-  final _iPadWebScannerURL =
-      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
 
   @override
   void initState() {
@@ -65,7 +63,6 @@ class _LoginViewState extends State<LoginView> {
   }
 
   navigateScanner(BuildContext context) async {
-    print(context);
     await _userDataProvider.login(
         _emailTextFieldController.text, _passwordTextFieldController.text);
 

@@ -10,28 +10,16 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:backtoschool/navigation/route_paths.dart';
 
-class ScanditScanner extends StatefulWidget {
-  @override
-  _ScanditScannerState createState() => _ScanditScannerState();
-}
-
-class _ScanditScannerState extends State<ScanditScanner> {
+class ScanditScanner extends StatelessWidget {
   ScannerDataProvider _scannerDataProvider;
   UserDataProvider _userDataProvider;
   set userDataProvider(UserDataProvider value) => _userDataProvider = value;
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _scannerDataProvider.requestCameraPermissions());
-  }
-
-  @override
   Widget build(BuildContext context) {
     _userDataProvider = Provider.of<UserDataProvider>(context);
     _scannerDataProvider = Provider.of<ScannerDataProvider>(context);
+    _scannerDataProvider.requestCameraPermissions();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(42),
@@ -40,7 +28,7 @@ class _ScanditScannerState extends State<ScanditScanner> {
           title: const Text("Scanner"),
         ),
       ),
-      body: !_scannerDataProvider.hasScanned ? renderScanner() : renderSubmissionView(),
+      body: !_scannerDataProvider.hasScanned ? renderScanner(context) : renderSubmissionView(context),
       floatingActionButton: IconButton(
         onPressed: () {},
         icon: Container(),
@@ -48,13 +36,13 @@ class _ScanditScannerState extends State<ScanditScanner> {
     );
   }
 
-  Widget renderScanner() {
+  Widget renderScanner(BuildContext context) {
     if (_scannerDataProvider.cameraPermissionsStatus == PermissionStatus.granted) {
       return (Stack(
         children: [
           Scandit(
               scanned: _scannerDataProvider.handleBarcodeResult,
-              onError: (e) => setState(() => _scannerDataProvider.message = e.message),
+              onError: (e) => (_scannerDataProvider.message = e.message),
               symbologies: [Symbology.CODE128, Symbology.DATA_MATRIX],
               onScanditCreated: (controller) => _scannerDataProvider.controller = controller,
               licenseKey: _scannerDataProvider.licenseKey),
@@ -77,7 +65,7 @@ class _ScanditScannerState extends State<ScanditScanner> {
     }
   }
 
-  Widget renderSubmissionView() {
+  Widget renderSubmissionView(BuildContext context) {
     if (_scannerDataProvider.isLoading) {
       return (Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -7,16 +7,16 @@ class BarcodeService {
 
   final NetworkHelper _networkHelper = NetworkHelper();
   final String _endpoint =
-      'https://api-qa.ucsd.edu:8243/scandata/2.0.0/scanData';
+      'https://api.ucsd.edu:8243/scandata/2.0.0/scanData';
 
   Future<bool> uploadResults(
       Map<String, String> headers, Map<String, dynamic> body) async {
     _error = null;
     _isLoading = true;
     try {
-      print(headers);
       final response =
       await _networkHelper.authorizedPost(_endpoint, headers, body);
+      print(response);
       if (response != null &&
           validateUploadResults(body, response)) {
         _isLoading = false;
