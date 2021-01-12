@@ -28,7 +28,9 @@ class ScanditScanner extends StatelessWidget {
           title: const Text("Scanner"),
         ),
       ),
-      body: !_scannerDataProvider.hasScanned ? renderScanner(context) : renderSubmissionView(context),
+      body: !_scannerDataProvider.hasScanned
+          ? renderScanner(context)
+          : renderSubmissionView(context),
       floatingActionButton: IconButton(
         onPressed: () {},
         icon: Container(),
@@ -37,14 +39,16 @@ class ScanditScanner extends StatelessWidget {
   }
 
   Widget renderScanner(BuildContext context) {
-    if (_scannerDataProvider.cameraPermissionsStatus == PermissionStatus.granted) {
+    if (_scannerDataProvider.cameraPermissionsStatus ==
+        PermissionStatus.granted) {
       return (Stack(
         children: [
           Scandit(
               scanned: _scannerDataProvider.handleBarcodeResult,
               onError: (e) => (_scannerDataProvider.message = e.message),
               symbologies: [Symbology.CODE128, Symbology.DATA_MATRIX],
-              onScanditCreated: (controller) => _scannerDataProvider.controller = controller,
+              onScanditCreated: (controller) =>
+                  _scannerDataProvider.controller = controller,
               licenseKey: _scannerDataProvider.licenseKey),
           Center(
             child: Container(
@@ -100,7 +104,8 @@ class ScanditScanner extends StatelessWidget {
             child: (Column(children: <Widget>[
               ClipOval(
                 child: Container(
-                  color: (!_scannerDataProvider.isValidBarcode || _scannerDataProvider.isDuplicate)
+                  color: (!_scannerDataProvider.isValidBarcode ||
+                          _scannerDataProvider.isDuplicate)
                       ? Colors.orange
                       : Colors.red,
                   height: 75,
@@ -112,13 +117,13 @@ class ScanditScanner extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Text("Submission Failed!",
                     style:
-                    TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.0),
                 child: Text(_scannerDataProvider.errorText,
                     style:
-                    TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.0),
@@ -131,7 +136,7 @@ class ScanditScanner extends StatelessWidget {
                 child: FlatButton(
                   padding: EdgeInsets.only(left: 32.0, right: 32.0),
                   onPressed: () {
-                      _scannerDataProvider.setDefaultStates();
+                    _scannerDataProvider.setDefaultStates();
                   },
                   child: Text(
                     "Try again",
@@ -152,13 +157,12 @@ class ScanditScanner extends StatelessWidget {
     // delay for 5s and then navigate back to login
     // logout
     Timer(Duration(seconds: 5), () {
-      Navigator.pushNamed(
-        context,
-        RoutePaths.Home,
-      );
       _userDataProvider.logout();
+      Navigator.pushNamedAndRemoveUntil(
+          context, RoutePaths.Home, (route) => false);
     });
   }
+
   Widget renderSuccessScreen(BuildContext context) {
     final dateFormat = new DateFormat('dd-MM-yyyy hh:mm:ss a');
     final String scanTime = dateFormat.format(new DateTime.now());
@@ -175,7 +179,7 @@ class ScanditScanner extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text("Scan Submitted",
                     style:
-                    TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               ),
               Text("Scan sent at: " + scanTime,
                   style: TextStyle(color: Theme.of(context).iconTheme.color)),
@@ -202,9 +206,7 @@ class ScanditScanner extends StatelessWidget {
             ListTile(
                 title: Text(String.fromCharCode(0x2022) +
                     " Results are usually available within 24-36 hours.")),
-            ListTile(
-                title: Text(String.fromCharCode(0x2022) +
-                    " You can view your results by logging in to MyStudentChart.")),
+            ListTile(title: buildChartText(context)),
             ListTile(
                 title: Text(String.fromCharCode(0x2022) +
                     " If you are experiencing symptoms of COVID-19, stay in your residence and seek guidance from a healthcare provider.")),
@@ -223,6 +225,27 @@ class ScanditScanner extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Text buildChartText(BuildContext context) {
+    final studentPattern = RegExp('[BGJMU]');
+    final staffPattern = RegExp('[E]');
+
+    if ((_userDataProvider.authenticationModel.ucsdaffiliation ?? "")
+        .contains(studentPattern)) {
+      // is a student
+      return Text(String.fromCharCode(0x2022) +
+          " You can view your results by logging in to MyStudentChart.");
+    } else if ((_userDataProvider.authenticationModel.ucsdaffiliation ?? "")
+        .contains(staffPattern)) {
+      // is staff
+      return Text(String.fromCharCode(0x2022) +
+          " You can view your results by logging in to MyUCSDChart.");
+    } else {
+      /// is not staff or student
+      return Text(String.fromCharCode(0x2022) +
+          " You can view your results by logging in to MyUCSDChart.");
+    }
   }
 
   openLink(String url) async {

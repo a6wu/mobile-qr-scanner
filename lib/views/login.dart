@@ -62,16 +62,23 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
+  void resetLoginDataOnScreen() {
+    _emailTextFieldController.clear();
+    _passwordTextFieldController.clear();
+  }
+
   navigateScanner(BuildContext context) async {
     await _userDataProvider.login(
         _emailTextFieldController.text, _passwordTextFieldController.text);
 
     /// Verify that user is logged in
     if (_userDataProvider.isLoggedIn) {
+      //clear credentials before moving to next screen
       Navigator.pushNamed(
         context,
         RoutePaths.ScanditScanner,
       );
+      resetLoginDataOnScreen();
     }
   }
 

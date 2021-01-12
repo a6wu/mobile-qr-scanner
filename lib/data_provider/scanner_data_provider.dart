@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scandit_plugin/flutter_scandit_plugin.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 class ScannerDataProvider extends ChangeNotifier {
   ScannerDataProvider() {
     ///DEFAULT STATES
     isLoading = false;
+
     ///INITIALIZE SERVICES
     _barcodeService = BarcodeService();
   }
@@ -38,9 +38,11 @@ class ScannerDataProvider extends ChangeNotifier {
   set controller(ScanditController value) {
     _controller = value;
   }
+
   set message(String value) {
     _message = value;
   }
+
   String get barcode => _barcode;
   String get message => _message;
   bool get didError => _didError;
@@ -56,7 +58,7 @@ class ScannerDataProvider extends ChangeNotifier {
     errorText = "Something went wrong, please try again.";
   }
 
-  void setDefaultStates(){
+  void setDefaultStates() {
     _hasScanned = false;
     hasSubmitted = false;
     _didError = false;
@@ -67,7 +69,7 @@ class ScannerDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void restoreDefaults(){
+  void restoreDefaults() {
     _hasScanned = false;
     hasSubmitted = false;
     _didError = false;
@@ -122,7 +124,8 @@ class ScannerDataProvider extends ChangeNotifier {
       } else if (_barcodeService.error
           .contains(ErrorConstants.duplicateRecord)) {
         print("in correct if");
-        errorText = "Submission failed due to barcode already scanned. Please scan another barcode.";
+        errorText =
+            "Submission failed due to barcode already scanned. Please scan another barcode.";
         _isDuplicate = true;
         notifyListeners();
       } else if (_barcodeService.error.contains(ErrorConstants.invalidMedia)) {
