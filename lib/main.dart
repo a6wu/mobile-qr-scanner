@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'data_provider/provider_setup.dart';
 
@@ -46,6 +47,14 @@ class TabBarApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''),
+          const Locale('es', ''),
+        ],
         theme: ThemeData(
           primarySwatch: ColorPrimary,
           accentColor: lightAccentColor,
