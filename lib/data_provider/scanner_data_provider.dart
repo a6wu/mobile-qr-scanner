@@ -33,6 +33,7 @@ class ScannerDataProvider extends ChangeNotifier {
   String errorText;
   PermissionStatus cameraPermissionsStatus = PermissionStatus.undetermined;
   ScanditController _controller;
+  List<String> scannedCodes = new List<String>();
 
   /// Simple setters and getters
   set controller(ScanditController value) {
@@ -51,7 +52,6 @@ class ScannerDataProvider extends ChangeNotifier {
   bool get isDuplicate => _isDuplicate;
   bool get isValidBarcode => _isValidBarcode;
   bool get successfulSubmission => _successfulSubmission;
-  ScannerDataProvider _scannerDataProvider;
 
   void initState() {
     _licenseKey = 'SCANDIT_NATIVE_LICENSE_PH';
@@ -96,6 +96,28 @@ class ScannerDataProvider extends ChangeNotifier {
     return {'barcode': _barcode, 'ucsdaffiliation': ucsdAffiliation};
   }
 
+  void verifyBarcodeScanning(BarcodeResult result) {
+    scannedCodes.add(result.data);
+    // currently scanning 3 consecutive times
+    if (scannedCodes.length < 3) {
+      _controller.resumeBarcodeScanning();
+    } else {
+      String firstScan = scannedCodes.first;
+      // if all scans are not the same, need to go into error state
+      // otherwise, continue to handle normally
+      if (scannedCodes.every((element) => element == firstScan)) {
+        // ACCEPT STATE
+        handleBarcodeResult(result);
+      } else {
+        // REJECT STATE
+        _hasScanned = true;
+        _didError = true;
+        isLoading = false;
+        notifyListeners();
+      }
+    }
+  }
+
   Future<void> handleBarcodeResult(BarcodeResult result) async {
     _hasScanned = true;
     _barcode = result.data;
@@ -123,7 +145,6 @@ class ScannerDataProvider extends ChangeNotifier {
         await _userDataProvider.silentLogin();
       } else if (_barcodeService.error
           .contains(ErrorConstants.duplicateRecord)) {
-        print("in correct if");
         errorText =
             "Submission failed due to barcode already scanned. Please scan another barcode.";
         _isDuplicate = true;
