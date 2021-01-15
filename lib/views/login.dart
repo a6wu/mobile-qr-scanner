@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../app_theme.dart';
 
@@ -103,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Single Sign-On',
+              AppLocalizations.of(context).singleSignOn,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -115,9 +116,9 @@ class _LoginViewState extends State<LoginView> {
               focusNode: myFocusNode,
               autofocus: true,
               decoration: InputDecoration(
-                hintText: 'UCSD Email',
+                hintText: AppLocalizations.of(context).ucsdEmail,
                 border: OutlineInputBorder(),
-                labelText: 'UCSD Email',
+                labelText: AppLocalizations.of(context).ucsdEmail,
               ),
               keyboardType: TextInputType.emailAddress,
               controller: _emailTextFieldController,
@@ -125,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: AppLocalizations.of(context).password,
                 suffixIcon: IconButton(
                   icon: Icon(
                     // Based on passwordObscured state choose the icon
@@ -135,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
                   onPressed: () => _toggle(),
                 ),
                 border: OutlineInputBorder(),
-                labelText: 'Password',
+                labelText: AppLocalizations.of(context).password,
               ),
               obscureText: _passwordObscured,
               keyboardType: TextInputType.emailAddress,
@@ -150,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
                     child: FlatButton(
                       child: _userDataProvider.isLoading
                           ? BuildLoadingIndicator()
-                          : Text('LOG IN',
+                          : Text(AppLocalizations.of(context).login,
                               style: TextStyle(
                                 fontSize: 24,
                               )),

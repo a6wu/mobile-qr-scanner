@@ -1,0 +1,21 @@
+{
+  "ucsdEmail": "UCSD Email",
+  "@ucsdEmail": {
+    "description": "UCSD Email box in login page"
+  },
+
+  "singleSignOn": "Single Sign-On",
+  "@singleSignOn": {
+    "description": "Single Sign On text in login page"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "password box in login page"
+  },
+
+  "login": "LOG IN",
+  "@login": {
+    "description": "login submit box in login page"
+  }
+}
