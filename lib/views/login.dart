@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/views/container.dart';
+import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../app_theme.dart';
 
@@ -16,14 +13,11 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   UserDataProvider _userDataProvider;
-  StreamSubscription _sub;
   FocusNode myFocusNode;
   bool _passwordObscured = true;
 
   final _emailTextFieldController = TextEditingController();
   final _passwordTextFieldController = TextEditingController();
-  final _iPadWebScannerURL =
-      'https://mobile.ucsd.edu/replatform/v1/qa/webview/scanner-ipad/index.html';
 
   @override
   void initState() {
@@ -44,18 +38,6 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  @override
-  void setState(fn) {
-    super.setState(fn);
-  }
-
-  @override
-  void dispose() {
-    _sub.cancel();
-    myFocusNode.dispose();
-    super.dispose();
-  }
-
   // Toggles the password show status
   void _toggle() {
     setState(() {
@@ -63,55 +45,24 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-  openLink(String url) async {
-    try {
-      launch(url, forceSafariVC: true);
-    } catch (e) {
-      // an error occurred, do nothing
-    }
+  void resetLoginDataOnScreen() {
+    _emailTextFieldController.clear();
+    _passwordTextFieldController.clear();
   }
 
-  generateScannerUrl(BuildContext context) async {
+  navigateScanner(BuildContext context) async {
     await _userDataProvider.login(
         _emailTextFieldController.text, _passwordTextFieldController.text);
 
     /// Verify that user is logged in
     if (_userDataProvider.isLoggedIn) {
-      /// Initialize header
-      final Map<String, String> header = {
-        'Authorization':
-            'Bearer ${_userDataProvider?.authenticationModel?.accessToken}'
-      };
-      var tokenQueryString =
-          "token=" + '${_userDataProvider.authenticationModel.accessToken}';
-
-      var affiliationQueryString = "affiliation=" +
-          '${_userDataProvider.authenticationModel.ucsdaffiliation}';
-
-      var url = _iPadWebScannerURL +
-          "?" +
-          tokenQueryString +
-          "&" +
-          affiliationQueryString;
-      initUniLinks(context);
-
-      _emailTextFieldController.clear();
-      _passwordTextFieldController.clear();
-
-      openLink(url);
+      //clear credentials before moving to next screen
+      Navigator.pushNamed(
+        context,
+        RoutePaths.ScanditScanner,
+      );
+      resetLoginDataOnScreen();
     }
-  }
-
-  Future<Null> initUniLinks(BuildContext context) async {
-    // Attach a listener to the stream
-    _sub = getLinksStream().listen((String link) async {
-      _userDataProvider.logout();
-      await closeWebView();
-      FocusScope.of(context).requestFocus(myFocusNode);
-      setState(() => {_passwordObscured = true});
-    }, onError: (err) {
-      // Handle exception by warning the user their action did not succeed
-    });
   }
 
   Widget buildLoginWidget(BuildContext context) {
@@ -176,7 +127,7 @@ class _LoginViewState extends State<LoginView> {
                               )),
                       onPressed: _userDataProvider.isLoading
                           ? null
-                          : () => generateScannerUrl(context),
+                          : () => navigateScanner(context),
                       color: ColorPrimary,
                       textColor: Theme.of(context).textTheme.button.color,
                     ),

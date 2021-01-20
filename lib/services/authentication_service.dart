@@ -12,13 +12,10 @@ class AuthenticationService {
 
   final NetworkHelper _networkHelper = NetworkHelper();
   final String endpoint =
-      'https://3hepzvdimd.execute-api.us-west-2.amazonaws.com/dev/v1.1/access-profile';
+      'https://3hepzvdimd.execute-api.us-west-2.amazonaws.com/qa/v2/access-profile';
 
   final String AUTH_SERVICE_API_KEY =
       'eKFql1kJAj53iyU2fNKyH4jI2b7t70MZ5YbAuPBZ';
-
-  final String refreshTokenEndpoint =
-      'https://3hepzvdimd.execute-api.us-west-2.amazonaws.com/dev/v1.1/access-profile/refresh';
 
   Future<bool> login(String base64EncodedWithEncryptedPassword) async {
     _error = null;
@@ -41,27 +38,6 @@ class AuthenticationService {
       ///TODO: handle errors thrown by the network class for different types of error responses
       _error = e.toString();
       print("authentication error:" + _error);
-      return false;
-    }
-  }
-
-  Future<bool> refreshAccessToken(String refreshToken) async {
-    _error = null;
-    final tokenHeaders = {'refresh_token': refreshToken};
-    try {
-      var response = await _networkHelper.authorizedPost(
-          refreshTokenEndpoint, tokenHeaders, null);
-      if (response['error'] != null) {
-        throw (response['error']);
-      }
-      final authenticationModel = AuthenticationModel.fromJson(response);
-      _data = authenticationModel;
-      _lastUpdated = DateTime.now();
-      return true;
-    } catch (e) {
-      ///TODO: check to see if error returned means the refresh token is expired
-      ///if refresh token is expired then try to reauthenticate using login method
-      _error = e.toString();
       return false;
     }
   }
