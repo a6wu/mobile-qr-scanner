@@ -154,7 +154,8 @@ class ScannerDataProvider extends ChangeNotifier {
         _isValidBarcode = false;
         notifyListeners();
       }
-      //_submitted = true;
+      //empty the scanned codes after every attempt to upload
+      scannedCodes.clear();
 
       notifyListeners();
     }
