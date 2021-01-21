@@ -15,3 +15,11 @@ class ErrorConstants {
   static const invalidMedia =
       'DioError [DioErrorType.RESPONSE]: Http status error [415]';
 }
+
+// This class of constants is to help with differentiating errors
+// for localization
+class LocalizationErrors {
+  static const int other = 0;
+  static const int duplicate = 1;
+  static const int invalid = 2;
+}

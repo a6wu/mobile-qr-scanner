@@ -1,6 +1,26 @@
 {
   "login_email": "Correo electrónico de UCSD",
-  "login_title": "Inicio de sesión único",
+  "login_title": "Iniciar sesión unica",
   "login_password": "Contraseña",
-  "login_submit": "INICIAR SESIÓN"
+  "login_submit": "Iniciar sesión",
+  "scanner_appbar": "Escáner",
+  "scanner_cam_permissions": "Permita los permisos de la cámara para escanear su kit de prueb.",
+  "scanner_loading": "Enviando ... por favor espere",
+  "success_heading": "Escaneo Enviado",
+  "success_time": "Escaneo enviado a: ",
+  "success_value": " Código escaneado: ",
+  "success_next_steps": "Próximos pasos:",
+  "success_step_one": " Continúe con el siguiente paso en el proceso de prueba",
+  "success_step_two": " Los resultados suelen estar disponibles en 24 a 36 horas.",
+  "success_step_three_student": " Puedes ver tus resultados iniciando sesión en MyStudentChart.",
+  "success_step_three_staff": " Puedes ver tus resultados iniciando sesión en MyUCSDChart.",
+  "success_step_three_visitor": " Puedes ver tus resultados iniciando sesión en MyUCSDChart.",
+  "success_step_four": " Si usted está experimentando síntomas de COVID-19, permanezca en su residencia y busque la guía de un proveedor de atención médica.",
+  "success_step_five": " Ayudar a combatir el COVID-19. Añade CA COVID Notify a tu teléfono.",
+  "failure_heading": "¡El envio ha fallado!",
+  "failure_error_duplicate": "El envio falló debido a que el código fue scaneado previamente. Por favor, analice otro código.",
+  "failure_error_invalid": "El código no es válido. Por favor, analice otro código.",
+  "failure_error_other": "Algo salió mal, por favor, inténtelo de nuevo.",
+  "failure_contact": "Si este problema persiste, por favor contacte un profesional de cuidado de la salud.",
+  "failure_tryagain": "Inténtalo otra vez"
 }

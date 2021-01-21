@@ -17,5 +17,105 @@
   "login_submit": "LOG IN",
   "@login_submit": {
     "description": "login submit box in login page"
+  },
+
+  "scanner_appbar": "Scanner",
+  "@scanner_appbar": {
+    "description": "App Bar title for scanner page"
+  },
+
+  "scanner_cam_permissions": "Please allow camera permissions to scan your test kit.",
+  "@scanner_cam_permissions": {
+    "description": "Disabled cam permissions message"
+  },
+
+  "scanner_loading": "Submitting...please wait",
+  "@scanner_loading": {
+    "description": "Loading text when submitting code"
+  },
+
+  "success_heading": "Scan Submitted",
+  "@success_heading": {
+    "description": "Heading in successful scan page"
+  },
+
+  "success_time": "Scan sent at: ",
+  "@success_time": {
+    "description": "Time successful scan was sent"
+  },
+
+  "success_value": "Scanned value: ",
+  "@success_value": {
+    "description": "Barcode that was scanned"
+  },
+
+  "success_next_steps": "Next Steps:",
+  "@success_next_steps": {
+    "description": "Next steps heading in page"
+  },
+
+  "success_step_one": " Proceed to the next step in the testing process",
+  "@success_step_one": {
+    "description": "step one in next steps"
+  },
+
+  "success_step_two": " Results are usually available within 24-36 hours.",
+  "@success_step_two": {
+    "description": "step two in next steps"
+  },
+
+  "success_step_three_student": " You can view your results by logging in to MyStudentChart.",
+  "@success_step_three_student": {
+    "description": "chart text for student"
+  },
+
+  "success_step_three_staff": " You can view your results by logging in to MyUCSDChart.",
+  "@success_step_three_staff": {
+    "description": "chart text for staff"
+  },
+
+  "success_step_three_visitor": " You can view your results by logging in to MyUCSDChart.",
+  "@success_step_three_visitor": {
+    "description": "chart text for visitor"
+  },
+
+  "success_step_four": " If you are experiencing symptoms of COVID-19, stay in your residence and seek guidance from a healthcare provider.",
+  "@success_step_four": {
+    "description": "step four in next steps"
+  },
+
+  "success_step_five": " Help fight COVID-19. Add CA COVID Notify to your phone.",
+  "@success_step_five": {
+    "description": "step five in next steps"
+  },
+
+  "failure_heading": "Submission Failed!",
+  "@failure_heading": {
+    "description": "heading for failure page"
+  },
+
+  "failure_error_duplicate": "Submission failed due to barcode already scanned. Please scan another barcode.",
+  "@failure_error_duplicate": {
+    "description": "error that code was already scanned previously"
+  },
+
+  "failure_error_invalid": "Barcode is not valid. Please scan another barcode.",
+  "@failure_error_invalid": {
+    "description": "error that code is invalid"
+  },
+
+  "failure_error_other": "Something went wrong, please try again.",
+  "@failure_error_other": {
+    "description": "other errors that could've occurred"
+  },
+
+  "failure_contact": "If this issue persists, please contact a healthcare professional.",
+  "@failure_contact": {
+    "description": "message to contact health professions"
+  },
+
+  "failure_tryagain": "Try again",
+  "@failure_tryagain": {
+    "description": "try again button in failure page"
   }
 }

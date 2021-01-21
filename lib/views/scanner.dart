@@ -1,4 +1,5 @@
 import 'package:backtoschool/app_theme.dart';
+import 'package:backtoschool/constants.dart';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/data_provider/scanner_data_provider.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:backtoschool/navigation/route_paths.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScanditScanner extends StatelessWidget {
   ScannerDataProvider _scannerDataProvider;
@@ -25,7 +27,7 @@ class ScanditScanner extends StatelessWidget {
         preferredSize: Size.fromHeight(42),
         child: AppBar(
           centerTitle: true,
-          title: const Text("Scanner"),
+          title: Text(AppLocalizations.of(context).scanner_appbar),
         ),
       ),
       body: !_scannerDataProvider.hasScanned
@@ -64,7 +66,7 @@ class ScanditScanner extends StatelessWidget {
       ));
     } else {
       return (Center(
-        child: Text("Please allow camera permissions to scan your test kit."),
+        child: Text(AppLocalizations.of(context).scanner_cam_permissions),
       ));
     }
   }
@@ -81,7 +83,7 @@ class ScanditScanner extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 20.0),
-            child: Text("Submitting...please wait",
+            child: Text(AppLocalizations.of(context).scanner_loading,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
           ),
         ],
@@ -115,20 +117,20 @@ class ScanditScanner extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text("Submission Failed!",
+                child: Text(AppLocalizations.of(context).failure_heading,
                     style:
                         TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.0),
-                child: Text(_scannerDataProvider.errorText,
+                child: Text(buildErrorText(context),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.0),
                 child: Text(
-                    "If this issue persists, please contact a healthcare professional.",
+                    AppLocalizations.of(context).failure_contact,
                     style: TextStyle(fontSize: 15)),
               ),
               Padding(
@@ -139,7 +141,7 @@ class ScanditScanner extends StatelessWidget {
                     _scannerDataProvider.setDefaultStates();
                   },
                   child: Text(
-                    "Try again",
+                    AppLocalizations.of(context).failure_tryagain,
                     style: TextStyle(fontSize: 18.0),
                   ),
                   color: lightButtonColor,
@@ -177,13 +179,13 @@ class ScanditScanner extends StatelessWidget {
               Icon(Icons.check_circle, color: Colors.green, size: 60),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("Scan Submitted",
+                child: Text(AppLocalizations.of(context).success_heading,
                     style:
                         TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               ),
-              Text("Scan sent at: " + scanTime,
+              Text(AppLocalizations.of(context).success_time + scanTime,
                   style: TextStyle(color: Theme.of(context).iconTheme.color)),
-              Text("Scanned value: " + _scannerDataProvider.barcode,
+              Text(AppLocalizations.of(context).success_value + _scannerDataProvider.barcode,
                   style: TextStyle(color: Theme.of(context).iconTheme.color)),
             ])),
           ),
@@ -193,7 +195,7 @@ class ScanditScanner extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 16.0),
               child: Text(
-                "Next Steps:",
+                AppLocalizations.of(context).success_next_steps,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             )),
@@ -202,18 +204,18 @@ class ScanditScanner extends StatelessWidget {
           children: <Widget>[
             ListTile(
                 title: Text(String.fromCharCode(0x2022) +
-                    " Proceed to the next step in the testing process")),
+                    AppLocalizations.of(context).success_step_one)),
             ListTile(
                 title: Text(String.fromCharCode(0x2022) +
-                    " Results are usually available within 24-36 hours.")),
+                    AppLocalizations.of(context).success_step_two)),
             ListTile(title: buildChartText(context)),
             ListTile(
                 title: Text(String.fromCharCode(0x2022) +
-                    " If you are experiencing symptoms of COVID-19, stay in your residence and seek guidance from a healthcare provider.")),
+                    AppLocalizations.of(context).success_step_four)),
             ListTile(
               title: Text(
                   String.fromCharCode(0x2022) +
-                      " Help fight COVID-19. Add CA COVID Notify to your phone.",
+                      AppLocalizations.of(context).success_step_five,
                   style: TextStyle(
                       color: Colors.blueAccent,
                       decoration: TextDecoration.underline)),
@@ -227,6 +229,28 @@ class ScanditScanner extends StatelessWidget {
     );
   }
 
+  String buildErrorText(BuildContext context) {
+    switch (_scannerDataProvider.scannerError) {
+      case LocalizationErrors.duplicate: {
+        return AppLocalizations.of(context).failure_error_duplicate;
+      }
+      break;
+
+      case LocalizationErrors.invalid: {
+        return AppLocalizations.of(context).failure_error_invalid;
+      }
+      break;
+
+      case LocalizationErrors.other: {
+        return AppLocalizations.of(context).failure_error_other;
+      }
+      
+      default: {
+        return AppLocalizations.of(context).failure_error_other;
+      }
+    }
+  }
+
   Text buildChartText(BuildContext context) {
     final studentPattern = RegExp('[BGJMU]');
     final staffPattern = RegExp('[E]');
@@ -235,16 +259,16 @@ class ScanditScanner extends StatelessWidget {
         .contains(studentPattern)) {
       // is a student
       return Text(String.fromCharCode(0x2022) +
-          " You can view your results by logging in to MyStudentChart.");
+          AppLocalizations.of(context).success_step_three_student);
     } else if ((_userDataProvider.authenticationModel.ucsdaffiliation ?? "")
         .contains(staffPattern)) {
       // is staff
       return Text(String.fromCharCode(0x2022) +
-          " You can view your results by logging in to MyUCSDChart.");
+          AppLocalizations.of(context).success_step_three_staff);
     } else {
       /// is not staff or student
       return Text(String.fromCharCode(0x2022) +
-          " You can view your results by logging in to MyUCSDChart.");
+          AppLocalizations.of(context).success_step_three_visitor);
     }
   }
 

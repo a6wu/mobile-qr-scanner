@@ -4,6 +4,7 @@ import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scandit_plugin/flutter_scandit_plugin.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScannerDataProvider extends ChangeNotifier {
   ScannerDataProvider() {
@@ -30,7 +31,7 @@ class ScannerDataProvider extends ChangeNotifier {
   bool _isDuplicate;
   bool _successfulSubmission;
   bool _isValidBarcode;
-  String errorText;
+  int scannerError;
   PermissionStatus cameraPermissionsStatus = PermissionStatus.undetermined;
   ScanditController _controller;
 
@@ -55,7 +56,7 @@ class ScannerDataProvider extends ChangeNotifier {
 
   void initState() {
     _licenseKey = 'SCANDIT_NATIVE_LICENSE_PH';
-    errorText = "Something went wrong, please try again.";
+    scannerError = LocalizationErrors.other;
   }
 
   void setDefaultStates() {
@@ -124,12 +125,11 @@ class ScannerDataProvider extends ChangeNotifier {
       } else if (_barcodeService.error
           .contains(ErrorConstants.duplicateRecord)) {
         print("in correct if");
-        errorText =
-            "Submission failed due to barcode already scanned. Please scan another barcode.";
+        scannerError = LocalizationErrors.duplicate;
         _isDuplicate = true;
         notifyListeners();
       } else if (_barcodeService.error.contains(ErrorConstants.invalidMedia)) {
-        errorText = "Barcode is not valid. Please scan another barcode.";
+        scannerError = LocalizationErrors.invalid;
         _isValidBarcode = false;
         notifyListeners();
       }
