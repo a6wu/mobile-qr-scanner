@@ -1,6 +1,6 @@
 {
-  "ucsdEmail": "Correo electrónico de UCSD",
-  "singleSignOn": "Inicio de sesión único",
-  "password": "Contraseña",
-  "login": "INICIAR SESIÓN"
+  "login_email": "Correo electrónico de UCSD",
+  "login_title": "Inicio de sesión único",
+  "login_password": "Contraseña",
+  "login_submit": "INICIAR SESIÓN"
 }

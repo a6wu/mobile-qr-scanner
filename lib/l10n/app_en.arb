@@ -1,21 +1,21 @@
 {
-  "ucsdEmail": "UCSD Email",
-  "@ucsdEmail": {
+  "login_email": "UCSD Email",
+  "@login_email": {
     "description": "UCSD Email box in login page"
   },
 
-  "singleSignOn": "Single Sign-On",
-  "@singleSignOn": {
-    "description": "Single Sign On text in login page"
+  "login_title": "Single Sign-On",
+  "@login_title": {
+    "description": "Single Sign On title tex in login page"
   },
 
-  "password": "Password",
-  "@password": {
+  "login_password": "Password",
+  "@login_password": {
     "description": "password box in login page"
   },
 
-  "login": "LOG IN",
-  "@login": {
+  "login_submit": "LOG IN",
+  "@login_submit": {
     "description": "login submit box in login page"
   }
 }

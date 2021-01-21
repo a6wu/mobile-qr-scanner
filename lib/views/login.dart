@@ -104,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              AppLocalizations.of(context).singleSignOn,
+              AppLocalizations.of(context).login_title,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -116,9 +116,9 @@ class _LoginViewState extends State<LoginView> {
               focusNode: myFocusNode,
               autofocus: true,
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context).ucsdEmail,
+                hintText: AppLocalizations.of(context).login_email,
                 border: OutlineInputBorder(),
-                labelText: AppLocalizations.of(context).ucsdEmail,
+                labelText: AppLocalizations.of(context).login_email,
               ),
               keyboardType: TextInputType.emailAddress,
               controller: _emailTextFieldController,
@@ -126,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context).password,
+                hintText: AppLocalizations.of(context).login_password,
                 suffixIcon: IconButton(
                   icon: Icon(
                     // Based on passwordObscured state choose the icon
@@ -136,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
                   onPressed: () => _toggle(),
                 ),
                 border: OutlineInputBorder(),
-                labelText: AppLocalizations.of(context).password,
+                labelText: AppLocalizations.of(context).login_password,
               ),
               obscureText: _passwordObscured,
               keyboardType: TextInputType.emailAddress,
@@ -151,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
                     child: FlatButton(
                       child: _userDataProvider.isLoading
                           ? BuildLoadingIndicator()
-                          : Text(AppLocalizations.of(context).login,
+                          : Text(AppLocalizations.of(context).login_submit,
                               style: TextStyle(
                                 fontSize: 24,
                               )),
