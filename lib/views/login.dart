@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:backtoschool/data_provider/user_data_provider.dart';
-import 'package:backtoschool/views/container.dart';
 import 'package:backtoschool/navigation/route_paths.dart';
+import 'package:backtoschool/views/container.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../app_theme.dart';
 
@@ -18,7 +14,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   UserDataProvider _userDataProvider;
-  StreamSubscription _sub;
   FocusNode myFocusNode;
   bool _passwordObscured = true;
 
@@ -42,18 +37,6 @@ class _LoginViewState extends State<LoginView> {
     return ContainerView(
       child: buildLoginWidget(context),
     );
-  }
-
-  @override
-  void setState(fn) {
-    super.setState(fn);
-  }
-
-  @override
-  void dispose() {
-    _sub.cancel();
-    myFocusNode.dispose();
-    super.dispose();
   }
 
   // Toggles the password show status
@@ -81,18 +64,6 @@ class _LoginViewState extends State<LoginView> {
       );
       resetLoginDataOnScreen();
     }
-  }
-
-  Future<Null> initUniLinks(BuildContext context) async {
-    // Attach a listener to the stream
-    _sub = getLinksStream().listen((String link) async {
-      _userDataProvider.logout();
-      await closeWebView();
-      FocusScope.of(context).requestFocus(myFocusNode);
-      setState(() => {_passwordObscured = true});
-    }, onError: (err) {
-      // Handle exception by warning the user their action did not succeed
-    });
   }
 
   Widget buildLoginWidget(BuildContext context) {

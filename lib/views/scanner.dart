@@ -46,7 +46,7 @@ class ScanditScanner extends StatelessWidget {
       return (Stack(
         children: [
           Scandit(
-              scanned: _scannerDataProvider.handleBarcodeResult,
+              scanned: _scannerDataProvider.verifyBarcodeScanning,
               onError: (e) => (_scannerDataProvider.message = e.message),
               symbologies: [Symbology.CODE128, Symbology.DATA_MATRIX],
               onScanditCreated: (controller) =>
