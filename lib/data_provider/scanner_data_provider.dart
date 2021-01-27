@@ -2,7 +2,6 @@ import 'package:backtoschool/constants.dart';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/services/barcode.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_scandit_plugin/flutter_scandit_plugin.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -60,6 +59,7 @@ class ScannerDataProvider extends ChangeNotifier {
   }
 
   void setDefaultStates() {
+    scannedCodes.clear();
     _hasScanned = false;
     hasSubmitted = false;
     _didError = false;
@@ -68,16 +68,6 @@ class ScannerDataProvider extends ChangeNotifier {
     _isDuplicate = false;
     _isValidBarcode = true;
     notifyListeners();
-  }
-
-  void restoreDefaults() {
-    _hasScanned = false;
-    hasSubmitted = false;
-    _didError = false;
-    _successfulSubmission = false;
-    isLoading = false;
-    _isDuplicate = false;
-    _isValidBarcode = true;
   }
 
   Future requestCameraPermissions() async {
@@ -101,15 +91,19 @@ class ScannerDataProvider extends ChangeNotifier {
     scannedCodes.add(result.data);
     // currently scanning 3 consecutive times
     if (scannedCodes.length < 3) {
+      print('Scan ' + scannedCodes.length.toString() + '/3 completed');
       _controller.resumeBarcodeScanning();
     } else {
+      print('Scan 3/3 completed');
       String firstScan = scannedCodes.first;
       // if all scans are not the same, need to go into error state
       // otherwise, continue to handle normally
       if (scannedCodes.every((element) => element == firstScan)) {
+        print('Scanned Codes Match (x3): TRUE');
         // ACCEPT STATE
         handleBarcodeResult(result);
       } else {
+        print('Scanned Codes Match (x3): FALSE');
         // REJECT STATE
         _hasScanned = true;
         _didError = true;
@@ -122,6 +116,7 @@ class ScannerDataProvider extends ChangeNotifier {
   Future<void> handleBarcodeResult(BarcodeResult result) async {
     _hasScanned = true;
     _barcode = result.data;
+    scannedCodes.clear();
     var data = createUserData();
     var headers = {
       "Content-Type": "application/json",
@@ -129,16 +124,18 @@ class ScannerDataProvider extends ChangeNotifier {
     };
     isLoading = true;
     notifyListeners();
+
+    print('Submitting Scanned Code: ' + _barcode);
     var results = await _barcodeService.uploadResults(headers, data);
 
     if (results) {
+      print('Submission: SUCCESS');
       isLoading = false;
       _didError = false;
       _successfulSubmission = true;
       notifyListeners();
     } else {
-      print(_barcodeService.error);
-      print("error constant: " + ErrorConstants.duplicateRecord);
+      print('Submission: FAILED');
       _successfulSubmission = false;
       _didError = true;
       isLoading = false;
@@ -154,9 +151,6 @@ class ScannerDataProvider extends ChangeNotifier {
         _isValidBarcode = false;
         notifyListeners();
       }
-      //empty the scanned codes after every attempt to upload
-      scannedCodes.clear();
-
       notifyListeners();
     }
   }
