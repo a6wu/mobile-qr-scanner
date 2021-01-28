@@ -2,13 +2,12 @@ import 'package:backtoschool/app_theme.dart';
 import 'package:backtoschool/navigation/router.dart' as appRouter;
 import 'package:backtoschool/views/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'data_provider/provider_setup.dart';
 
@@ -21,25 +20,11 @@ void main() async {
 Future<void> initializeStorage() async {
   /// initialize hive storage
   Hive.initFlutter('.');
+  FlutterSecureStorage storage = FlutterSecureStorage();
 
-  if (await isFirstRun()) {
-    FlutterSecureStorage storage = FlutterSecureStorage();
-
-    /// delete any saved data
-    await Hive.deleteFromDisk();
-    await storage.deleteAll();
-    setFirstRun();
-  }
-}
-
-Future<bool> isFirstRun() async {
-  final prefs = await SharedPreferences.getInstance();
-  return (prefs.getBool('first_run') ?? true);
-}
-
-void setFirstRun() async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setBool('first_run', false);
+  /// delete any saved data
+  await Hive.deleteFromDisk();
+  await storage.deleteAll();
 }
 
 class TabBarApp extends StatelessWidget {
