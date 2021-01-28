@@ -1,16 +1,16 @@
+import 'dart:async';
+
 import 'package:backtoschool/app_theme.dart';
 import 'package:backtoschool/constants.dart';
-import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/data_provider/scanner_data_provider.dart';
+import 'package:backtoschool/data_provider/user_data_provider.dart';
+import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_scandit_plugin/flutter_scandit_plugin.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'dart:async';
-import 'package:backtoschool/navigation/route_paths.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScanditScanner extends StatelessWidget {
   ScannerDataProvider _scannerDataProvider;
@@ -129,8 +129,7 @@ class ScanditScanner extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.0),
-                child: Text(
-                    AppLocalizations.of(context).failure_contact,
+                child: Text(AppLocalizations.of(context).failure_contact,
                     style: TextStyle(fontSize: 15)),
               ),
               Padding(
@@ -158,7 +157,7 @@ class ScanditScanner extends StatelessWidget {
   void timeout(BuildContext context) async {
     // delay for 5s and then navigate back to login
     // logout
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 10), () {
       _userDataProvider.logout();
       Navigator.pushNamedAndRemoveUntil(
           context, RoutePaths.Home, (route) => false);
@@ -185,7 +184,9 @@ class ScanditScanner extends StatelessWidget {
               ),
               Text(AppLocalizations.of(context).success_time + scanTime,
                   style: TextStyle(color: Theme.of(context).iconTheme.color)),
-              Text(AppLocalizations.of(context).success_value + _scannerDataProvider.barcode,
+              Text(
+                  AppLocalizations.of(context).success_value +
+                      _scannerDataProvider.barcode,
                   style: TextStyle(color: Theme.of(context).iconTheme.color)),
             ])),
           ),
@@ -212,17 +213,6 @@ class ScanditScanner extends StatelessWidget {
             ListTile(
                 title: Text(String.fromCharCode(0x2022) +
                     AppLocalizations.of(context).success_step_four)),
-            ListTile(
-              title: Text(
-                  String.fromCharCode(0x2022) +
-                      AppLocalizations.of(context).success_step_five,
-                  style: TextStyle(
-                      color: Colors.blueAccent,
-                      decoration: TextDecoration.underline)),
-              onTap: () {
-                openLink("https://en.ucsd.edu");
-              },
-            ),
           ],
         ),
       ],
@@ -231,23 +221,27 @@ class ScanditScanner extends StatelessWidget {
 
   String buildErrorText(BuildContext context) {
     switch (_scannerDataProvider.scannerError) {
-      case LocalizationErrors.duplicate: {
-        return AppLocalizations.of(context).failure_error_duplicate;
-      }
-      break;
+      case LocalizationErrors.duplicate:
+        {
+          return AppLocalizations.of(context).failure_error_duplicate;
+        }
+        break;
 
-      case LocalizationErrors.invalid: {
-        return AppLocalizations.of(context).failure_error_invalid;
-      }
-      break;
+      case LocalizationErrors.invalid:
+        {
+          return AppLocalizations.of(context).failure_error_invalid;
+        }
+        break;
 
-      case LocalizationErrors.other: {
-        return AppLocalizations.of(context).failure_error_other;
-      }
-      
-      default: {
-        return AppLocalizations.of(context).failure_error_other;
-      }
+      case LocalizationErrors.other:
+        {
+          return AppLocalizations.of(context).failure_error_other;
+        }
+
+      default:
+        {
+          return AppLocalizations.of(context).failure_error_other;
+        }
     }
   }
 
@@ -269,14 +263,6 @@ class ScanditScanner extends StatelessWidget {
       /// is not staff or student
       return Text(String.fromCharCode(0x2022) +
           AppLocalizations.of(context).success_step_three_visitor);
-    }
-  }
-
-  openLink(String url) async {
-    try {
-      launch(url, forceSafariVC: true);
-    } catch (e) {
-      // an error occurred, do nothing
     }
   }
 }
