@@ -104,7 +104,7 @@ class UserDataProvider extends ChangeNotifier {
     var cipher = OAEPEncoding(pc.AsymmetricBlockCipher('RSA'));
     pc.AsymmetricKeyParameter<pc.RSAPublicKey> keyParametersPublic =
         new pc.PublicKeyParameter(publicKey);
-        new pc.PublicKeyParameter(publicKey);
+    new pc.PublicKeyParameter(publicKey);
     cipher.init(true, keyParametersPublic);
     Uint8List output = cipher.process(utf8.encode(password));
     var base64EncodedText = base64.encode(output);
@@ -159,35 +159,6 @@ class UserDataProvider extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
-
-  ///Uses saved refresh token to reauthenticate user
-  ///Invokes [silentLogin] on failure
-  ///TODO: check if we need to change the loading boolean since this is a silent login mechanism
-//  Future refreshToken() async {
-//    _error = null;
-//    _isLoading = true;
-//    notifyListeners();
-//    if (await _authenticationService
-//        .refreshAccessToken(_authenticationModel.refreshToken)) {
-//      /// this is only added to refresh token method because the response for the refresh token does not include
-//      /// pid and ucsdaffiliation fields
-//      if (_authenticationModel.ucsdaffiliation != null) {
-//        AuthenticationModel finalModel = _authenticationService.data;
-//        finalModel.ucsdaffiliation = _authenticationModel.ucsdaffiliation;
-//        finalModel.pid = _authenticationModel.pid;
-//      }
-//      await updateAuthenticationModel(_authenticationService.data);
-//    } else {
-//      ///if the token passed from the device was empty then [_error] will be populated with 'The given refresh token was invalid'
-//      ///if the token passed from the device was malformed or expired then [_error] will be populated with 'invalid_grant'
-//      _error = _authenticationService.error;
-//
-//      ///Try to use user's credentials to login again
-//      await silentLogin();
-//    }
-//    _isLoading = false;
-//    notifyListeners();
-//  }
 
   ///GETTERS FOR MODELS
   AuthenticationModel get authenticationModel => _authenticationModel;

@@ -1,3 +1,4 @@
+import 'package:backtoschool/data_provider/locale_data_provider.dart';
 import 'package:backtoschool/data_provider/user_data_provider.dart';
 import 'package:backtoschool/navigation/route_paths.dart';
 import 'package:backtoschool/views/container.dart';
@@ -51,6 +52,29 @@ class _LoginViewState extends State<LoginView> {
     _passwordTextFieldController.clear();
   }
 
+  String getDeviceType() {
+    final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    return data.size.shortestSide < 550 ? 'phone' : 'tablet';
+  }
+
+  var localeSelectedStyle = TextStyle(
+    shadows: [Shadow(color: Color(0xff006A96), offset: Offset(0, -5))],
+    color: Colors.transparent,
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    decoration: TextDecoration.underline,
+    decorationColor: Color(0xff006A96),
+    decorationThickness: 4,
+    decorationStyle: TextDecorationStyle.solid,
+  );
+
+  var localeUnselectedStyle = TextStyle(
+    shadows: [Shadow(color: Color(0xff666666), offset: Offset(0, -5))],
+    color: Colors.transparent,
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+  );
+
   navigateScanner(BuildContext context) async {
     await _userDataProvider.login(
         _emailTextFieldController.text, _passwordTextFieldController.text);
@@ -66,21 +90,67 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
+  Widget buildLocalizationButtons(BuildContext context) {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            child: Text(
+              "English",
+              style: Provider.of<LocaleDataProvider>(context).locale ==
+                      Locale('en', '')
+                  ? localeSelectedStyle
+                  : localeUnselectedStyle,
+            ),
+            onPressed: () =>
+                Provider.of<LocaleDataProvider>(context, listen: false)
+                    .setLocaleEn(),
+          ),
+          TextButton(
+            child: Text(
+              "Español",
+              style: Provider.of<LocaleDataProvider>(context).locale ==
+                      Locale('es', '')
+                  ? localeSelectedStyle
+                  : localeUnselectedStyle,
+            ),
+            onPressed: () =>
+                Provider.of<LocaleDataProvider>(context, listen: false)
+                    .setLocaleEs(),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget buildLoginWidget(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(50.0),
+        padding: getDeviceType() == 'tablet'
+            ? EdgeInsets.all(50.0)
+            : EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              AppLocalizations.of(context).login_title,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: ColorPrimary,
-              ),
+            getDeviceType() == 'phone'
+                ? Row(children: [buildLocalizationButtons(context)])
+                : Container(),
+            Row(
+              children: [
+                Text(
+                  AppLocalizations.of(context).login_title,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorPrimary,
+                  ),
+                ),
+                getDeviceType() == 'tablet'
+                    ? buildLocalizationButtons(context)
+                    : Container(),
+              ],
             ),
             SizedBox(height: 20),
             TextField(

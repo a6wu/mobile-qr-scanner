@@ -1,4 +1,6 @@
 import 'package:backtoschool/app_theme.dart';
+import 'package:backtoschool/data_provider/locale_data_provider.dart';
+import 'package:backtoschool/data_provider/provider_setup.dart';
 import 'package:backtoschool/navigation/router.dart' as appRouter;
 import 'package:backtoschool/views/login.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-
-import 'data_provider/provider_setup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,27 +32,31 @@ class TabBarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: providers,
-      child: MaterialApp(
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('en', ''),
-          const Locale('es', ''),
-        ],
-        theme: ThemeData(
-          primarySwatch: ColorPrimary,
-          accentColor: lightAccentColor,
-          brightness: Brightness.light,
-          buttonColor: lightButtonColor,
-          textTheme: lightThemeText,
-          iconTheme: lightIconTheme,
-          appBarTheme: lightAppBarTheme,
+      child: Consumer<LocaleDataProvider>(
+        builder: (context, _localeDataProvider, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: _localeDataProvider.locale,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', ''),
+            const Locale('es', ''),
+          ],
+          theme: ThemeData(
+            primarySwatch: ColorPrimary,
+            accentColor: lightAccentColor,
+            brightness: Brightness.light,
+            buttonColor: lightButtonColor,
+            textTheme: lightThemeText,
+            iconTheme: lightIconTheme,
+            appBarTheme: lightAppBarTheme,
+          ),
+          home: LoginView(),
+          onGenerateRoute: appRouter.Router.generateRoute,
         ),
-        home: LoginView(),
-        onGenerateRoute: appRouter.Router.generateRoute,
       ),
     );
   }
