@@ -89,12 +89,68 @@ class ScanditScanner extends StatelessWidget {
         ],
       ));
     } else if (_scannerDataProvider.successfulSubmission) {
-      return (renderSuccessScreen(context));
+      if(_scannerDataProvider.isBloodScreen) {
+        return (renderBloodScreenSuccessScreen(context));
+      }
+      else {
+        return (renderSuccessScreen(context));
+      }
     } else if (_scannerDataProvider.didError) {
       return (renderFailureScreen(context));
     } else {
       return (renderFailureScreen(context));
     }
+  }
+
+  Widget renderBloodScreenSuccessScreen(BuildContext context) {
+    final dateFormat = new DateFormat('dd-MM-yyyy hh:mm:ss a');
+    final String scanTime = dateFormat.format(new DateTime.now());
+    timeout(context);
+
+    return Column(
+      children: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.all(32),
+            child: (Column(children: <Widget>[
+              Icon(Icons.check_circle, color: Colors.green, size: 60),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(AppLocalizations.of(context).success_heading,
+                    style:
+                    TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              ),
+              Text(AppLocalizations.of(context).success_time + scanTime,
+                  style: TextStyle(color: Theme.of(context).iconTheme.color)),
+              Text(
+                  AppLocalizations.of(context).success_value +
+                      _scannerDataProvider.barcode,
+                  style: TextStyle(color: Theme.of(context).iconTheme.color)),
+            ])),
+          ),
+        ),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 16.0),
+              child: Text(
+                AppLocalizations.of(context).success_next_steps,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            )),
+        ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            ListTile(
+                title: Text(String.fromCharCode(0x2022) +
+                    AppLocalizations.of(context).blood_success_step_one)),
+            ListTile(
+                title: Text(String.fromCharCode(0x2022) +
+                    AppLocalizations.of(context).blood_success_step_two)),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget renderFailureScreen(BuildContext context) {

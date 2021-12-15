@@ -121,7 +121,7 @@ class ScannerDataProvider extends ChangeNotifier {
     scannedCodes.clear();
 
     // regex for blood test kit scanning
-    RegExp bloodScreenTest = RegExp(r'^UCSDNAS');
+    RegExp bloodScreenTest = RegExp(r'^ZAP');
     isBloodScreen = bloodScreenTest.hasMatch(_barcode);
     print('isBloodScreen: ${isBloodScreen}');
 

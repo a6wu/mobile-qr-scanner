@@ -22,5 +22,7 @@
   "failure_error_invalid": "El código no es válido. Por favor, analice otro código.",
   "failure_error_other": "Algo salió mal, por favor, inténtelo de nuevo.",
   "failure_contact": "Si este problema persiste, por favor contacte un profesional de cuidado de la salud.",
-  "failure_tryagain": "Inténtalo otra vez"
+  "failure_tryagain": "Inténtalo otra vez",
+	"blood_success_step_one": " Proceed to the next step in the fingerstick blood collection process.",
+	"blood_success_step_two": " You can view your research test results in your MyChart in about 60 days."
 }
