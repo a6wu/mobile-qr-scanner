@@ -15,6 +15,8 @@ class ScannerDataProvider extends ChangeNotifier {
   }
 
   bool _hasScanned;
+  bool isBloodScreen = false;
+  bool isCovidTest = false;
   bool hasSubmitted;
   bool _didError;
   String _message = '';
@@ -117,6 +119,12 @@ class ScannerDataProvider extends ChangeNotifier {
     _hasScanned = true;
     _barcode = result.data;
     scannedCodes.clear();
+
+    // regex for blood test kit scanning
+    RegExp bloodScreenTest = RegExp(r'^UCSDNAS');
+    isBloodScreen = bloodScreenTest.hasMatch(_barcode);
+    print('isBloodScreen: ${isBloodScreen}');
+
     var data = createUserData();
     var headers = {
       "Content-Type": "application/json",
