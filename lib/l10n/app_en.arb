@@ -118,10 +118,12 @@
   "@failure_tryagain": {
     "description": "try again button in failure page"
   },
+
   "blood_success_step_one": " Proceed to the next step in the fingerstick blood collection process.",
   "@blood_success_step_one": {
     "description": "success step 1 for blood test scans"
   },
+
   "blood_success_step_two": " You can view your research test results in your MyChart in about 60 days.",
   "@blood_success_step_two": {
     "description": "success step 2 for blood test scans"
