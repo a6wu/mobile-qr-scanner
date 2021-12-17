@@ -236,7 +236,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../Flutter/Flutter.framework",
 				"${PODS_ROOT}/ScanditBarcodeCapture/ScanditBarcodeCapture.framework",
 				"${PODS_ROOT}/ScanditCaptureCore/ScanditCaptureCore.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_scandit_plugin/flutter_scandit_plugin.framework",
@@ -245,7 +244,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScanditBarcodeCapture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScanditCaptureCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_scandit_plugin.framework",
