@@ -23,6 +23,6 @@
   "failure_error_other": "Algo salió mal, por favor, inténtelo de nuevo.",
   "failure_contact": "Si este problema persiste, por favor contacte un profesional de cuidado de la salud.",
   "failure_tryagain": "Inténtalo otra vez",
-	"blood_success_step_one": " Proceed to the next step in the fingerstick blood collection process.",
-	"blood_success_step_two": " You can view your research test results in your MyChart in about 60 days."
+  "blood_success_step_one": " Continúe el siguiente paso en el proceso de recolección de sangre.",
+ 	"blood_success_step_two": " Puede ver los resultados de sus pruebas en aproximadamente 60 días en su pagina de MyChart."
 }
