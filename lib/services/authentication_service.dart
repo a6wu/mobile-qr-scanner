@@ -12,10 +12,10 @@ class AuthenticationService {
 
   final NetworkHelper _networkHelper = NetworkHelper();
   final String endpoint =
-      'https://3hepzvdimd.execute-api.us-west-2.amazonaws.com/qa/v2/access-profile';
+      'https://uokdbiyx00.execute-api.us-west-2.amazonaws.com/qa/v1.1/access-profile';
 
   final String AUTH_SERVICE_API_KEY =
-      'eKFql1kJAj53iyU2fNKyH4jI2b7t70MZ5YbAuPBZ';
+      'uRgcQKJKMW4WzC2scgUXUjbE7e8TQJN7JsfjVBK6';
 
   Future<bool> login(String base64EncodedWithEncryptedPassword) async {
     _error = null;
