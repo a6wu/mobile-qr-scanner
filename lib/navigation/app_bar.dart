@@ -13,6 +13,7 @@ class CMAppBar extends StatelessWidget {
           fit: BoxFit.contain,
           height: 28,
         ),
+        brightness: Brightness.dark,
       ),
     );
   }

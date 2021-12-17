@@ -28,6 +28,7 @@ class ScanditScanner extends StatelessWidget {
         child: AppBar(
           centerTitle: true,
           title: Text(AppLocalizations.of(context).scanner_appbar),
+          brightness: Brightness.dark,
         ),
       ),
       body: !_scannerDataProvider.hasScanned
@@ -89,10 +90,9 @@ class ScanditScanner extends StatelessWidget {
         ],
       ));
     } else if (_scannerDataProvider.successfulSubmission) {
-      if(_scannerDataProvider.isBloodScreen) {
+      if (_scannerDataProvider.isBloodScreen) {
         return (renderBloodScreenSuccessScreen(context));
-      }
-      else {
+      } else {
         return (renderSuccessScreen(context));
       }
     } else if (_scannerDataProvider.didError) {
@@ -118,7 +118,7 @@ class ScanditScanner extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text(AppLocalizations.of(context).success_heading,
                     style:
-                    TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               ),
               Text(AppLocalizations.of(context).success_time + scanTime,
                   style: TextStyle(color: Theme.of(context).iconTheme.color)),
