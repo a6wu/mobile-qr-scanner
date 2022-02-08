@@ -99,6 +99,11 @@
     "description": "error that code was already scanned previously"
   },
 
+  "failure_error_ineligible": "Do not test within 90 days after receiving a positive test for COVID-19. Place all materials in the recycle and trash receptacles.",
+  "@failure_error_ineligible": {
+    "description": "error that user is ineligible for pcr scan"
+  },
+
   "failure_error_invalid": "Barcode is not valid. Please scan another barcode.",
   "@failure_error_invalid": {
     "description": "error that code is invalid"

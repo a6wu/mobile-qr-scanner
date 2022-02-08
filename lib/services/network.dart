@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:backtoschool/constants.dart';
 import 'package:dio/dio.dart';
 
-
 class NetworkHelper {
   ///TODO: inside each service that file place a switch statement to handle all
   ///TODO: different errors thrown by the Dio client DioErrorType.RESPONSE
@@ -70,6 +69,9 @@ class NetworkHelper {
     } else if (_response.statusCode == 500) {
       String message = _response.data['message'] ?? '';
       throw Exception(ErrorConstants.authorizedPostErrors + message);
+    } else if (_response.statusCode == 406) {
+      String message = _response.data['message'] ?? '';
+      throw Exception(ErrorConstants.notAcceptable + message);
     } else if (_response.statusCode == 409) {
       String message = _response.data['message'] ?? '';
       throw Exception(ErrorConstants.duplicateRecord + message);

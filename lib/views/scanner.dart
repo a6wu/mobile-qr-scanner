@@ -277,6 +277,12 @@ class ScanditScanner extends StatelessWidget {
 
   String buildErrorText(BuildContext context) {
     switch (_scannerDataProvider.scannerError) {
+      case LocalizationErrors.ineligible:
+        {
+          return AppLocalizations.of(context).failure_error_ineligible;
+        }
+        break;
+
       case LocalizationErrors.duplicate:
         {
           return AppLocalizations.of(context).failure_error_duplicate;

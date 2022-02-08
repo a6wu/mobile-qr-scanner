@@ -147,8 +147,13 @@ class ScannerDataProvider extends ChangeNotifier {
       _successfulSubmission = false;
       _didError = true;
       isLoading = false;
+
       if (_barcodeService.error.contains(ErrorConstants.invalidBearerToken)) {
         await _userDataProvider.silentLogin();
+      } else if (_barcodeService.error.contains(ErrorConstants.notAcceptable)) {
+        scannerError = LocalizationErrors.ineligible;
+        _isDuplicate = true;
+        notifyListeners();
       } else if (_barcodeService.error
           .contains(ErrorConstants.duplicateRecord)) {
         scannerError = LocalizationErrors.duplicate;
@@ -159,6 +164,7 @@ class ScannerDataProvider extends ChangeNotifier {
         _isValidBarcode = false;
         notifyListeners();
       }
+
       notifyListeners();
     }
   }

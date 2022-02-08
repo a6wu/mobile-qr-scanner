@@ -10,6 +10,8 @@ class ErrorConstants {
   static const authorizedPostErrors = 'Failed to upload data: ';
   static const authorizedPutErrors = 'Failed to update data: ';
   static const invalidBearerToken = 'Invalid bearer token';
+  static const notAcceptable =
+      'DioError [DioErrorType.RESPONSE]: Http status error [406]';
   static const duplicateRecord =
       'DioError [DioErrorType.RESPONSE]: Http status error [409]';
   static const invalidMedia =
@@ -22,4 +24,5 @@ class LocalizationErrors {
   static const int other = 0;
   static const int duplicate = 1;
   static const int invalid = 2;
+  static const int ineligible = 3;
 }
