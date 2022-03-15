@@ -19,7 +19,7 @@
   "success_step_five": " Ayudar a combatir el COVID-19. Añade CA COVID Notify a tu teléfono.",
   "failure_heading": "¡El envio ha fallado!",
   "failure_error_duplicate": "El envio falló debido a que el código fue scaneado previamente. Por favor, analice otro código.",
-  "failure_error_ineligible": "No vuelvas hacer otra prueba dentro de 90 días después de recibir una prueba positiva para COVID-19. Coloque todos los materiales en los contenedores de basura y reciclaje.",
+  "failure_error_ineligible": "No vuelvas hacer otra prueba dentro de 30 días después de recibir una prueba positiva para COVID-19. Coloque todos los materiales en los contenedores de basura y reciclaje.",
   "failure_error_invalid": "El código no es válido. Por favor, analice otro código.",
   "failure_error_other": "Algo salió mal, por favor, inténtelo de nuevo.",
   "failure_contact": "Si este problema persiste, por favor contacte un profesional de cuidado de la salud.",
